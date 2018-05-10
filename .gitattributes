@@ -1,0 +1,40 @@
+# Handle line endings automatically for files detected as text
+# and leave all files detected as binary untouched.
+* text=auto
+
+#
+# The above will handle all files NOT found below
+#
+# These files are text and should be normalized (Convert crlf => lf)
+*.css           text    linguist-vendored
+*.df            text    linguist-vendored
+*.htm           text    linguist-vendored
+*.html          text    linguist-vendored
+*.java          text    linguist-vendored
+*.js            text    linguist-vendored
+*.json          text    linguist-vendored
+*.jsp           text    linguist-vendored
+*.jspf          text    linguist-vendored
+*.jspx          text    linguist-vendored
+*.properties    text    linguist-vendored
+*.sh            text    linguist-vendored
+*.tld           text    linguist-vendored
+*.txt           text    linguist-vendored
+*.tag           text    linguist-vendored
+*.tagx          text    linguist-vendored
+*.xml           text    linguist-vendored
+*.yml           text    linguist-vendored
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.class         binary  linguist-vendored
+*.dll           binary  linguist-vendored
+*.ear           binary  linguist-vendored
+*.gif           binary  linguist-vendored
+*.ico           binary  linguist-vendored
+*.jar           binary  linguist-vendored
+*.jpg           binary  linguist-vendored
+*.jpeg          binary  linguist-vendored
+*.png           binary  linguist-vendored
+*.so            binary  linguist-vendored
+*.war           binary  linguist-vendored
