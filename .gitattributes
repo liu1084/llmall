@@ -13,10 +13,10 @@
 *.df            text    linguist-vendored
 *.htm           text    linguist-vendored
 *.html          text    linguist-vendored
-*.java          text    linguist-vendored
-*.js            text    linguist-vendored
+#*.java          text    linguist-vendored
+#*.js            text    linguist-vendored
 *.json          text    linguist-vendored
-*.jsp           text    linguist-vendored
+#*.jsp           text    linguist-vendored
 *.jspf          text    linguist-vendored
 *.jspx          text    linguist-vendored
 *.properties    text    linguist-vendored
@@ -26,7 +26,7 @@
 *.tag           text    linguist-vendored
 *.tagx          text    linguist-vendored
 *.xml           text    linguist-vendored
-*.yml           text    linguist-vendored
+#*.yml           text    linguist-vendored
 
 # These files are binary and should be left untouched
 # (binary is a macro for -text -diff)
