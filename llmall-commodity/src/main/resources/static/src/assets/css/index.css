@@ -1,0 +1,178 @@
+/*
+ *
+ *  * The MIT License
+ *  *
+ *  * Copyright (c) 2015-2016 by Jim Liu
+ *  *
+ *  * Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  * of this software and associated documentation files (the "Software"), to deal
+ *  * in the Software without restriction, including without limitation the rights
+ *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  * copies of the Software, and to permit persons to whom the Software is
+ *  * furnished to do so, subject to the following conditions:
+ *  *
+ *  * The above copyright notice and this permission notice shall be included in
+ *  * all copies or substantial portions of the Software.
+ *  *
+ *  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  * THE SOFTWARE.
+ *
+ */
+
+/* line 21, D:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/susy-2.2.12/sass/susy/language/susy/_box-sizing.scss */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 4, ../../sass/layouts/_index-layout.scss */
+.main {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 12, D:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/susy-2.2.12/sass/susy/output/support/_clearfix.scss */
+.main:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+/* line 8, ../../sass/layouts/_index-layout.scss */
+.main nav li {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 25%;
+  float: left;
+}
+/* line 13, ../../sass/layouts/_index-layout.scss */
+.main .footer {
+  clear: both;
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+/* line 15, ../../sass/layouts/_index-layout.scss */
+.main .footer div:nth-child(1) {
+  width: 16.66667%;
+  float: left;
+  margin-right: 4.16667%;
+}
+/* line 18, ../../sass/layouts/_index-layout.scss */
+.main .footer div:nth-child(1) {
+  width: 37.5%;
+  float: left;
+  margin-right: 4.16667%;
+}
+/* line 21, ../../sass/layouts/_index-layout.scss */
+.main .footer div:nth-child(1) {
+  width: 58.33333%;
+  float: left;
+  margin-right: 4.16667%;
+}
+/* line 24, ../../sass/layouts/_index-layout.scss */
+.main .footer div:nth-child(1) {
+  width: 79.16667%;
+  float: left;
+  margin-right: 4.16667%;
+}
+/* line 27, ../../sass/layouts/_index-layout.scss */
+.main .footer div:nth-child(1) {
+  width: 16.66667%;
+  float: right;
+  margin-right: 0;
+}
+
+/* line 2, ../../sass/config/_global.scss */
+body {
+  font-family: "Microsoft YaHei", "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* line 7, ../../sass/config/_global.scss */
+.user-no-select {
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* line 11, ../../sass/config/_global.scss */
+ul, li, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 17, ../../sass/config/_global.scss */
+input, select, textarea {
+  border: 0;
+  background-color: #fff;
+  outline: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 25, ../../sass/config/_global.scss */
+input, select {
+  height: 1.875rem;
+  line-height: 1.875rem;
+}
+
+/* line 30, ../../sass/config/_global.scss */
+input[type="date"] {
+  height: 1.875rem;
+  line-height: 1.875rem;
+}
+
+/* line 35, ../../sass/config/_global.scss */
+.footer {
+  height: 9.375rem;
+  line-height: 9.375rem;
+  text-align: center;
+  background-color: #f2f2f4;
+}
+
+/* line 42, ../../sass/config/_global.scss */
+select, input {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* line 7, ../../sass/index.scss */
+.main nav {
+  height: 3.125rem;
+  font-weight: bold;
+}
+/* line 10, ../../sass/index.scss */
+.main nav li {
+  height: 3.125rem;
+  line-height: 3.125rem;
+  text-align: center;
+  background-color: #f9f9f9;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: #999999;
+}
+/* line 19, ../../sass/index.scss */
+.main nav li.nav-active {
+  color: #5b8de4;
+  border-bottom-color: #5b8de4;
+  border-bottom-width: 0.375rem;
+  border-bottom-style: solid;
+}
+/* line 26, ../../sass/index.scss */
+.main pre {
+  height: 21.875rem;
+  padding: 3.125rem 0;
+}

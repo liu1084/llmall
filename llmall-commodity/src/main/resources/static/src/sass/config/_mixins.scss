@@ -1,0 +1,278 @@
+/*
+ *
+ *  * The MIT License
+ *  *
+ *  * Copyright (c) 2015-2016 by Jim Liu
+ *  *
+ *  * Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  * of this software and associated documentation files (the "Software"), to deal
+ *  * in the Software without restriction, including without limitation the rights
+ *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  * copies of the Software, and to permit persons to whom the Software is
+ *  * furnished to do so, subject to the following conditions:
+ *  *
+ *  * The above copyright notice and this permission notice shall be included in
+ *  * all copies or substantial portions of the Software.
+ *  *
+ *  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  * THE SOFTWARE.
+ *
+ */
+
+@import "../variables";
+@import "compass";
+@mixin avatar($radius: 40 * $onePx, $backgroundColor: #ccc) {
+  @include border-radius($radius);
+  height: $radius;
+  width: $radius;
+  background-color: $backgroundColor;
+  display: inline-block;
+  //background: #ffffff url($imageUrl) no-repeat center center transparent;
+}
+@mixin product-list($listHeaderHeight: 25 * $onePx, $listHeight: 50 * $onePx, $titleColor: #000){
+  font-size: 12 * $onePx;
+  overflow: hidden;
+  .list-header {
+    height: $listHeaderHeight;
+    line-height: $listHeaderHeight;
+    background-color: $listHeaderBackgroundColor;
+    padding: 0 15 * $onePx;
+
+    .title {
+      font-size: 12 * $onePx;
+      color: $titleColor;
+    }
+
+    .project-count {
+      text-align: right;
+      color: #5b8de4;
+    }
+  }
+
+  .list-body {
+    font-size: 14 * $onePx;
+    padding: 5 * $onePx 0;
+
+    .item {
+      box-sizing: content-box;
+      height: 40 * $onePx;
+      line-height: 40 * $onePx;
+      padding: 5 * $onePx 15 * $onePx 5 * $onePx 15 * $onePx;
+      border-bottom: .5 * $onePx solid #cdcdd3;
+      .i-checkbox {
+        display: inline-block;
+        height: 18 * $onePx;
+        width: 18 * $onePx;
+        margin: 0 15 * $onePx 0 0;
+        position: relative;
+        color: #fff;
+        $backgroundColor: #ccc;
+        @include avatar(18 * $onePx, $backgroundColor);
+      }
+      .i-checkbox-unchecked {
+        @extend .i-checkbox;
+      }
+      .i-checkbox-checked {
+        @extend .i-checkbox;
+        $backgroundColor: #5b8de4;
+        @include avatar(18 * $onePx, $backgroundColor);
+      }
+
+      .avatar {
+        display: inline-block;
+        height: 40 * $onePx;
+        width: 40 * $onePx;
+        line-height: 40 * $onePx;
+        text-align: center;
+        font-size: 18 * $onePx;
+        color: #fff;
+      }
+      .avatar-a {
+        @extend .avatar;
+        $backgroundColor: #ab703b;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-a, .avatar-g, .avatar-m, .avatar-s, .avatar-x {
+        @extend .avatar;
+        $backgroundColor: #ab703b;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-b, .avatar-h, .avatar-n, .avatar-t, .avatar-y {
+        @extend .avatar;
+        $backgroundColor: #49c6d3;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-c, .avatar-i, .avatar-o, .avatar-u, .avatar-z {
+        @extend .avatar;
+        $backgroundColor: #f55b23;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-d, .avatar-j, .avatar-p, .avatar-v {
+        @extend .avatar;
+        $backgroundColor: #f5a623;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-e, .avatar-k, .avatar-q, .avatar-w {
+        @extend .avatar;
+        $backgroundColor: #7ed321;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-f, .avatar-l, .avatar-r, .avatar-g {
+        @extend .avatar;
+        $backgroundColor: #5576d7;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+
+      .description{
+        display: inline-block;
+        padding: 0 0 0 10 * $onePx;
+      }
+
+      .description:last-child {
+        border-bottom: none;
+        vertical-align: top;
+      }
+
+      .number{
+        float: right;
+        width: 80 * $onePx;
+        max-width: 80px;
+      }
+    }
+    .item:last-child{
+      border-bottom: none;
+    }
+  }
+}
+@mixin list($listHeaderHeight: 25 * $onePx, $listHeight: 50 * $onePx, $titleColor: #000){
+  font-size: 12 * $onePx;
+  overflow: hidden;
+  .list-header {
+    height: $listHeaderHeight;
+    line-height: $listHeaderHeight;
+    background-color: $listHeaderBackgroundColor;
+    padding: 0 15 * $onePx;
+
+    .title {
+      font-size: 12 * $onePx;
+      color: $titleColor;
+    }
+
+    .project-count {
+      text-align: right;
+      color: #5b8de4;
+    }
+  }
+
+  .list-body {
+    font-size: 14 * $onePx;
+    padding: 5 * $onePx 0;
+
+    .item {
+      box-sizing: content-box;
+      height: 40 * $onePx;
+      line-height: 40 * $onePx;
+      margin-bottom: 5 * $onePx;
+      padding: 0 0 5 * $onePx 15 * $onePx;
+      border-bottom: .5 * $onePx solid #cdcdd3;
+      .i-checkbox {
+        display: inline-block;
+        height: 18 * $onePx;
+        width: 18 * $onePx;
+        margin: 0 15 * $onePx 0 0;
+        position: relative;
+        color: #fff;
+        $backgroundColor: #ccc;
+        @include avatar(18 * $onePx, $backgroundColor);
+      }
+      .i-checkbox-unchecked {
+        @extend .i-checkbox;
+      }
+      .i-checkbox-checked {
+        @extend .i-checkbox;
+        $backgroundColor: #5b8de4;
+        @include avatar(18 * $onePx, $backgroundColor);
+      }
+
+      .avatar {
+        display: inline-block;
+        height: 40 * $onePx;
+        width: 40 * $onePx;
+        line-height: 40 * $onePx;
+        text-align: center;
+        font-size: 18 * $onePx;
+        color: #FFF;
+      }
+
+      .avatar-a, .avatar-g, .avatar-m, .avatar-s, .avatar-x {
+        @extend .avatar;
+        $backgroundColor: #ab703b;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-b, .avatar-h, .avatar-n, .avatar-t, .avatar-y {
+        @extend .avatar;
+        $backgroundColor: #49c6d3;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-c, .avatar-i, .avatar-o, .avatar-u, .avatar-z {
+        @extend .avatar;
+        $backgroundColor: #f55b23;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-d, .avatar-j, .avatar-p, .avatar-v {
+        @extend .avatar;
+        $backgroundColor: #f5a623;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-e, .avatar-k, .avatar-q, .avatar-w {
+        @extend .avatar;
+        $backgroundColor: #7ed321;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+      .avatar-f, .avatar-l, .avatar-r, .avatar-g {
+        @extend .avatar;
+        $backgroundColor: #5576d7;
+        @include avatar(40 * $onePx, $backgroundColor);
+      }
+
+      .description{
+        display: inline-block;
+        padding: 0 0 0 10 * $onePx;
+        border-bottom: .5 * $onePx solid #cdcdd3;
+      }
+
+      .description:last-child {
+        border-bottom: none;
+        vertical-align: top;
+      }
+    }
+
+    .item:last-child{
+      margin-bottom: 0;
+      padding: 0 0 0 15 * $onePx;
+      border-bottom: none;
+    }
+  }
+}
+
+@mixin apply-for($radius: 60 * $onePx){
+  @include avatar(60px, #5b8de4);
+}
+
+@mixin toast($backgroundColor: #000, $width: 200 * $onePx, $height: 140 * $onePx){
+  @include border-radius(5 * $onePx);
+  width: $width;
+  height: $height;
+  opacity: .6;
+  background-color: $backgroundColor;
+  position: absolute;
+  z-index: 2048;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

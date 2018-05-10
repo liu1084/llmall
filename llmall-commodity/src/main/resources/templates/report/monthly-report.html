@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>月账单查询</title>
+	<link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/vendor/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link href="/src/assets/css/daily-report.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="alert-tip"></div>
+    <div id="baseURL" style="display: none;" th:text="${baseURL}"></div>
+	<div class="daily-report">
+		<div class="daily-report-condition">
+			<form class="form-inline">
+				<div class="form-group gutter-right">
+					<label for="is-include-associate-owner">是否包含下属货主</label>
+					<select id="is-include-associate-owner" class="form-control">
+						<option value="false">否</option>
+						<option value="true">是</option>
+					</select>
+				</div>
+
+				<div class="form-group gutter-right">
+					<label for="month">账单周期</label>
+					<input type="text" class="form-control" id="month" value=""/>
+				</div>
+
+				<button class="btn btn-default btn-primary" id="query-monthly-report" onclick="void(0);return false;">查询</button>
+			</form>
+		</div>
+		<div class="tip">说明：每月6日生成账单，应付金额请以月账单为准。</div>
+		<hr/>
+		<div class="table-container">
+			<table class="table table-bordered monthly-report-table">
+				<thead class="head-color">
+				<tr>
+					<th>货主</th>
+					<th>总包方</th>
+					<th>账单周期</th>
+					<th>入库费(元)</th>
+					<th>出库费(元)</th>
+					<th>存储费(元)</th>
+					<th>增值服务费(元)</th>
+					<th>合计(元)</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr class="loading-image">
+					<td colspan="10">请选择条件进行查询</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/vendor/handlebars/dist/handlebars.min.js"></script>
+<script type="text/javascript" src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/vendor/datatables.net/js/jquery.dataTables.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/vendor/datatables.net-bs/js/dataTables.bootstrap.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/src/common/handlebars-render.js"></script>
+<script type="text/javascript" src="/dist/templates.js"></script>
+<script type="text/javascript" src="/src/app/report/monthly-report.js"></script>
+
+</body>
+</html>

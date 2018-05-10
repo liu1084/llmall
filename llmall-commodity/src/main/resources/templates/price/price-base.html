@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>基础价格表</title>
+    <link th:replace="common/_css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div th:replace="common/_header"></div>
+    <div th:replace="common/_base-url"></div>
+    <div class="basic-price">
+        <div class="price-operations">
+            <span class="col-md-6">
+                <input type="text" class="price-basic-search" placeholder="仓库名称或编码" />
+            </span>
+            <span class="col-md-6" style="text-align: right;">
+                <input type="button" value="全选" class="btn-default select-all" />
+                <input type="button" value="反选" class="btn-default select-reverse" />
+                <input type="button" value="删除" disabled="disabled" class="btn-default btn-danger delete-selected" />
+                <input type="button" value="新增" class="btn-default btn-success new-basic-price" />
+            </span>
+        </div>
+        <table class="table table-hover basic-price-table">
+            <thead>
+                <tr>
+                    <th>选择1</th>
+                    <th>仓库编码</th>
+                    <th>仓库名称</th>
+                    <th>收费类别</th>
+                    <th>收费项目</th>
+                    <th>单位</th>
+                    <th>单价</th>
+                    <th>标准保底价</th>
+                    <th>分包商结算价</th>
+                    <th>分包商保底价</th>
+                    <th>合并周期</th>
+                    <th>合并纬度</th>
+                    <th>修改</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<div th:replace="common/_js"></div>
+<div th:replace="common/_footer"></div>
+</body>
+</html>

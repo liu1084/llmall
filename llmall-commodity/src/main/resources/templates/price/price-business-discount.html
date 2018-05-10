@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>特殊折扣率</title>
+    <link th:replace="common/_css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div th:replace="common/_header"></div>
+    <div th:replace="common/_base-url"></div>
+    <div class="business-discount">
+        <div class="discount-operations">
+            <span class="col-md-6">
+                <input type="text" class="business-discount-search" placeholder="合作伙伴编码或者名称" />
+            </span>
+            <span class="col-md-6" style="text-align: right;">
+                <input type="button" value="全选" class="btn-default select-all" />
+                <input type="button" value="反选" class="btn-default select-reverse" />
+                <input type="button" value="删除" disabled="disabled" class="btn-default btn-danger delete-selected" />
+                <input type="button" value="新增" class="btn-default btn-success new-business-discount" />
+            </span>
+        </div>
+        <table class="table table-hover business-discount-table">
+            <thead>
+            <tr>
+                <th>选择</th>
+                <th>业务来源</th>
+                <th>折扣率</th>
+                <th>合作伙伴编码</th>
+                <th>合作伙伴名称</th>
+                <th>修改</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<div th:replace="common/_js"></div>
+<div th:replace="common/_footer"></div>
+</body>
+</html>

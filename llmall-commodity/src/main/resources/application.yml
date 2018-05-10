@@ -1,0 +1,154 @@
+## common config
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+    uri-encoding: UTF-8
+spring:
+  profiles:
+    active: test
+  aop:
+    auto: true
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      exclude: static/**
+  http:
+    encoding:
+      charset: UTF-8
+  messages:
+    encoding: UTF-8
+  application:
+    name: bms-service
+
+mybatis:
+  mapper-locations: classpath:mappers/**/*Mapper.xml
+  type-aliases-package: cn.g2link.bms.common.model.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  type-handlers-package: cn.g2link.web.stream.config.handler
+logging:
+  path: /data/web_log/java/stream
+  config: classpath:logback-spring.xml
+  
+#swagger config
+swagger:
+  title: 流量计费对外服务API
+  description: 提供计费规则、价格和发票等业务的查询、写入等服务
+  contact:
+    name: 雷乐
+    email: llei@g2link.cn
+  base-package: cn.g2link.web
+  base-path: /api/**, /admin/**
+  exclude-path: /error, /ops/**
+  enabled: true
+
+---
+# dev
+## port
+server:
+  port: 9090
+## database
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/g2link_billing_center?serverTimezone=UTC&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.jdbc.Driver
+    username: liujun
+    password: Vtoxibk9qnpWr+1w
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: ge*u0Oj9X
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://dev1-eureka.g2link-inc.cn/eureka
+## WMP
+wmp:
+  config:
+    token: 00009f03b6484120bd90648539ca3d37
+
+
+---
+## test database
+server:
+  port: 9090
+
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://dev.billdb.g2link-inc.cn:3306/g2link_billing_center?serverTimezone=UTC&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.jdbc.Driver
+    username: liujun
+    password: Vtoxibk9qnpWr+1w
+  redis:
+    host: dev.billredis.g2link-inc.cn
+    port: 6379
+    password: ge*u0Oj9X
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://test1-eureka.g2link-inc.cn/eureka
+
+## WMP
+wmp:
+  config:
+    token: 12C68BB9C48E403CB0C4583BFED59118
+
+
+---
+## demo database
+server:
+  port: 9090
+
+spring:
+  profiles: demo
+  datasource:
+    url: jdbc:mysql://rm-2zenbpg41kiv8nx8m.mysql.rds.aliyuncs.com:3306/g2link_billing_center?serverTimezone=UTC&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.jdbc.Driver
+    username: ops_0
+    password: G2link001
+  redis:
+    host: b779a4f49dba41e4.redis.rds.aliyuncs.com
+    port: 6379
+    password: G2link2016
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://demo1-eureka.g2link-inc.cn:8001/eureka,http://demo1-eureka.g2link-inc.cn:8002/eureka
+
+## WMP
+wmp:
+  config:
+    token: 1143489E003D4F7B9DD6C6230C9E2EF6
+---
+## pro database
+server:
+  port: 9090
+
+spring:
+  profiles: pro
+  datasource:
+    url: jdbc:mysql://rm-2zetw6d2icqomfnd3.mysql.rds.aliyuncs.com:3306/g2link_billing_center?serverTimezone=UTC&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.jdbc.Driver
+    username: bill_w
+    password: 32EMSHG2Ddim
+  redis:
+    host: c493266fefea4627.redis.rds.aliyuncs.com
+    port: 6379
+    password: G2link2016
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1.g2link-inc.cn/eureka,http://eureka2.g2link-inc.cn/eureka
+
+## WMP
+wmp:
+  config:
+    token: 04CDD4C07A4D4FBFB6F456DE694DBBE7

@@ -1,0 +1,7 @@
+<script class="handlebars" type="text/x-handlebars-template">
+    <select class="form-control bill-period">
+        {{#each billPeriods}}
+            <option value="{{code}}" {{selected this.code ../selectedBillPeriod}}>{{message}}</option>
+        {{/each}}
+    </select>
+</script>

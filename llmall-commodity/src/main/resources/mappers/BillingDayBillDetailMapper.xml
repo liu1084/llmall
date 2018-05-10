@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.g2link.web.stream.model.mapper.BillingDayBillDetailMapper">
+    <resultMap id="BaseResultMap" type="cn.g2link.bms.common.model.entity.bill.BillingDayBillDetail">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="warehouse_code" jdbcType="VARCHAR" property="warehouseCode"/>
+        <result column="warehouse_name" jdbcType="VARCHAR" property="warehouseName"/>
+        <result column="owner_name" jdbcType="VARCHAR" property="ownerName"/>
+        <result column="owner_code" jdbcType="VARCHAR" property="ownerCode"/>
+        <result column="order_code" jdbcType="VARCHAR" property="orderCode"/>
+        <result column="bill_time" jdbcType="TIMESTAMP" property="billTime"/>
+        <result column="msg_id" jdbcType="VARCHAR" property="msgId"/>
+        <result column="billing_rule_id" jdbcType="BIGINT" property="billingRuleId"/>
+        <result column="min_rule_id" jdbcType="BIGINT" property="minRuleId"/>
+        <result column="bill_type" jdbcType="VARCHAR" property="billType"/>
+        <result column="bill_item" jdbcType="VARCHAR" property="billItem"/>
+        <result column="unit" jdbcType="INTEGER" property="unit"/>
+        <result column="unit_num" jdbcType="INTEGER" property="unitNum"/>
+        <result column="item_code" jdbcType="VARCHAR" property="itemCode"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="sub_price" jdbcType="DECIMAL" property="subPrice"/>
+        <result column="payment" jdbcType="DECIMAL" property="payment"/>
+        <result column="sub_payment" jdbcType="DECIMAL" property="subPayment"/>
+        <result column="actual_payment" jdbcType="DECIMAL" property="actualPayment"/>
+        <result column="sub_actual_payment" jdbcType="DECIMAL" property="subActualPayment"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="source" jdbcType="INTEGER" property="source"/>
+        <result column="enabled" jdbcType="INTEGER" property="enabled"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, warehouse_code, warehouse_name, owner_code, owner_name, order_code, UNIX_TIMESTAMP(bill_time) * 1000 AS bill_time,
+        msg_id, billing_rule_id, min_rule_id, bill_type, bill_item, unit, unit_num,
+        item_code, item_name, `length`, width, height, gross_weight, net_weight, per_unit_num, quantity
+        price,sub_price, payment, sub_payment, actual_payment, sub_actual_payment, status, source, enabled
+    </sql>
+
+    <insert id="insert" parameterType="BillingDayBillDetail">
+        insert into billing_day_bill_detail (
+            warehouse_code, warehouse_name,
+            owner_code, owner_name, order_code,
+            bill_time, msg_id, billing_rule_id,
+            min_rule_id, bill_type, bill_item,
+            unit, unit_num, item_code, item_name,
+            `length`, width, height, gross_weight,
+            net_weight, per_unit_num, quantity,
+            price, sub_price, payment, sub_payment,
+            actual_payment, sub_actual_payment,
+            status, source
+        ) values (
+            #{warehouseCode,jdbcType=VARCHAR}, #{warehouseName,jdbcType=VARCHAR},
+            #{ownerCode,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR},
+            FROM_UNIXTIME(#{billTime,jdbcType=TIMESTAMP}/1000), #{msgId,jdbcType=VARCHAR}, #{billingRuleId,jdbcType=BIGINT},
+            #{minRuleId,jdbcType=BIGINT}, #{billType,jdbcType=VARCHAR}, #{billItem,jdbcType=VARCHAR},
+            #{unit,jdbcType=INTEGER}, #{unitNum,jdbcType=INTEGER}, #{itemCode,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR},
+            #{length,jdbcType=DECIMAL}, #{width,jdbcType=DECIMAL}, #{height,jdbcType=DECIMAL}, #{grossWeight,jdbcType=DECIMAL},
+            #{netWeight,jdbcType=DECIMAL}, #{perUnitNum,jdbcType=DECIMAL}, #{quantity,jdbcType=DECIMAL},
+            #{price,jdbcType=DECIMAL},#{subPrice,jdbcType=DECIMAL}, #{payment,jdbcType=DECIMAL}, #{subPayment,jdbcType=DECIMAL},
+            #{actualPayment,jdbcType=DECIMAL}, #{subActualPayment,jdbcType=DECIMAL},
+            #{status,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <select id="isExistMsgId" parameterType="String" resultType="int">
+        SELECT COUNT(1)
+        FROM billing_day_bill_detail t1
+        WHERE 1=1
+        AND t1.msg_id = #{msgId}
+        AND t1.status = 1
+        AND t1.enabled = 1
+    </select>
+
+    <select id="getDetail" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM billing_day_bill_detail t1
+        WHERE 1=1
+        AND t1.status = 1
+        AND t1.enabled = 1
+        AND DATE_FORMAT(t1.bill_time, '%Y-%m') = #{yearMonth}
+    </select>
+
+    <select id="getResetDetail" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM billing_day_bill_detail t1
+        WHERE 1=1
+        AND (t1.enabled = 0 OR t1.status = 0)
+        AND DATE_FORMAT(t1.bill_time, '%Y-%m') = #{yearMonth}
+    </select>
+
+    <select id="getDetailSumByMinRule" resultType="hashmap">
+        SELECT
+        SUM(t1.payment) AS payments,
+        SUM(t1.sub_payment) AS subPayments,
+        SUM(t1.unit_num) AS unitNums
+        FROM billing_day_bill_detail t1
+        WHERE 1=1
+        AND t1.warehouse_code = #{warehouseCode}
+        AND t1.bill_item = #{billItem}
+        AND t1.status = 1
+        AND t1.enabled = 1
+        <choose>
+            <when test="period == 1">
+                AND DATE_FORMAT(t1.bill_time, '%Y-%m-%d %H') = DATE_FORMAT(FROM_UNIXTIME(#{billTime}/1000), '%Y-%m-%d %H')
+            </when>
+            <when test="period == 2">
+                AND DATE_FORMAT(t1.bill_time, '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(#{billTime}/1000), '%Y-%m-%d')
+            </when>
+
+            <when test="period == 3">
+                AND DATE_FORMAT(t1.bill_time, '%Y-%m') = DATE_FORMAT(FROM_UNIXTIME(#{billTime}/1000), '%Y-%m')
+            </when>
+
+            <when test="period == 4">
+                AND DATE_FORMAT(t1.bill_time, '%Y-%m-%V') = DATE_FORMAT(FROM_UNIXTIME(#{billTime}/1000), '%Y-%m-%V')
+            </when>
+        </choose>
+
+        <choose>
+            <when test="lat == 1">
+                AND t1.owner_code = #{ownerCode}
+            </when>
+            <when test="lat == 2">
+                AND t1.order_code = #{orderCode}
+            </when>
+            <when test="lat == 3">
+                AND t1.owner_code = #{ownerCode}
+                AND t1.order_code = #{orderCode}
+            </when>
+        </choose>
+
+    </select>
+
+    <update id="updateActualPayment">
+        UPDATE billing_day_bill_detail t1
+        SET
+            t1.actual_payment = #{actualPayment},
+            t1.sub_actual_payment = #{subActualPayment},
+            t1.min_rule_id = #{minPaymentId},
+            t1.update_time = CURRENT_TIMESTAMP
+        WHERE 1=1
+        AND t1.id = #{id}
+    </update>
+
+    <select id="getDetailSumByItem" resultType="cn.g2link.bms.common.model.BillingDayBillDetailDO">
+        SELECT
+        bd.owner_code as ownerCode,
+        bd.owner_name as ownerName,
+        bd.warehouse_code as warehouseCode,
+        bd.warehouse_name as warehouseName,
+        bd.bill_item as billItem,
+        SUM(bd.unit_num) as totalUnitNum,
+        bd.bill_time as billTime
+        FROM billing_day_bill_detail bd, billing_warehouse_owner wo
+        WHERE wo.warehouse_code = bd.warehouse_code
+        AND wo.owner_code = bd.owner_code
+        AND bd.`enabled` != 0
+        <choose>
+            <when test="date !=null">
+                AND DATE_FORMAT(bd.bill_time, "%Y-%m-%d") = date_sub(#{date}, interval #{day} day)
+            </when>
+            <when test="date ==null">
+                AND DATE_FORMAT(bd.bill_time, "%Y-%m-%d") = date_sub(curdate(), interval #{day} day)
+            </when>
+        </choose>
+        AND wo.is_billing = 1
+        AND (bd.bill_item = 1001 or bd.bill_item = 3001 or bd.bill_item = 2001)
+        GROUP BY bd.warehouse_code,bd.owner_code,bd.bill_item
+    </select>
+
+
+    <select id="monitorUnit" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM billing_day_bill_detail bd
+        where 1=1
+        and ( bd.bill_item =1001 or bd.bill_item=2002 or bd.bill_item=2001 or bd.bill_item=3001)
+        and bd.unit_num &lt;=0.0001
+        and bd.`enabled`!= 0
+        <choose>
+            <when test="date !=null">
+                and DATE_FORMAT(bd.bill_time,"%Y-%m-%d") BETWEEN date_sub(#{date},interval #{day} day) and
+                #{date}
+            </when>
+            <when test="date ==null">
+                and DATE_FORMAT(bd.bill_time,"%Y-%m-%d") BETWEEN date_sub(curdate(),interval #{day} day) and
+                CURRENT_DATE
+            </when>
+        </choose>
+    </select>
+
+
+    <select id="monitorRule" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM billing_day_bill_detail bd
+        where 1=1
+        and (billing_rule_id is NULL or min_rule_id is NULL)
+        and bd.`enabled`!=0
+        <choose>
+            <when test="date !=null">
+                and DATE_FORMAT(bd.bill_time,"%Y-%m-%d") BETWEEN date_sub(#{date},interval #{day} day) and
+                #{date}
+            </when>
+            <when test="date ==null">
+                and DATE_FORMAT(bd.bill_time,"%Y-%m-%d") BETWEEN date_sub(curdate(),interval #{day} day) and
+                CURRENT_DATE
+            </when>
+        </choose>
+    </select>
+
+    <update id="cleanWMPExceptionData">
+        UPDATE `billing_day_bill_detail` t1
+        SET t1.update_time = CURRENT_TIMESTAMP ,
+        t1.enabled = 0
+        WHERE 1=1
+        AND t1.source = 1
+        AND t1.warehouse_code = #{warehouseCode}
+        AND t1.owner_code = #{ownerCode}
+        AND t1.bill_type = #{billType}
+        AND UNIX_TIMESTAMP(bill_time) BETWEEN UNIX_TIMESTAMP(#{startTime}) AND FROM_UNIXTIME(#{endTime})
+    </update>
+</mapper>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>代理商抽成比例</title>
+	<link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/vendor/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div id="baseURL" style="display: none;" th:text="${baseURL}"></div>
+    <div class="alert-tip"></div>
+    <div class="dialog"></div>
+    <div class="base-discount">
+        <div class="discount-operations">
+            <span class="col-md-6">
+                <input type="text" class="provider-base-radio-search" placeholder="代理商编码或名称" />
+            </span>
+            <span class="col-md-6" style="text-align: right;">
+                <input type="button" value="全选" class="btn-default select-all" />
+                <input type="button" value="反选" class="btn-default select-reverse" />
+                <input type="button" value="删除" disabled="disabled" class="btn-default btn-danger delete-selected" />
+                <input type="button" value="新增" class="btn-default btn-success new-provider-base-radio" />
+            </span>
+        </div>
+        <table class="table table-hover provider-base-radio-table">
+            <thead>
+            <tr>
+                <th>选择</th>
+                <th>代理商编码</th>
+                <th>代理商名称</th>
+                <th>抽成比例</th>
+                <th>修改</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/vendor/handlebars/dist/handlebars.min.js"></script>
+<script type="text/javascript" src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/vendor/datatables.net/js/jquery.dataTables.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/vendor/datatables.net-bs/js/dataTables.bootstrap.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/dist/templates.js"></script>
+<script type="text/javascript" src="/src/common/handlebars-render.js"></script>
+<script type="text/javascript" src="/src/app/provider/provider-base-radio.js"></script>
+
+</body>
+</html>

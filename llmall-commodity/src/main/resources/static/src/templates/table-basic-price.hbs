@@ -1,0 +1,19 @@
+<script class="handlebars" type="text/x-handlebars-template">
+    {{#each this}}
+        <tr class="price basic">
+            <td><input type="checkbox" class="basic-price-select" value="{{id}}"/></td>
+            <td>{{warehouseCode}}</td>
+            <td>{{warehouseName}}</td>
+            <td>{{billType}}</td>
+            <td>{{billItem}}</td>
+            <td>{{unit}}</td>
+            <td>{{{price}}}</td>
+            <td>{{{minPrice}}}</td>
+            <td>{{{subPrice}}}</td>
+            <td>{{{subMinPrice}}}</td>
+            <td>{{period}}</td>
+            <td>{{lat}}</td>
+            <td><input type="button" value="修改" class="btn-default price-basic-update" data-update-id="{{id}}" /></td>
+        </tr>
+    {{/each}}
+</script>

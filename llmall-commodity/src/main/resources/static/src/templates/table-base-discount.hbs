@@ -1,0 +1,10 @@
+<script class="handlebars" type="text/x-handlebars-template">
+    {{#each this}}
+        <tr class="price base-discount">
+            <td><input type="checkbox" class="base-discount-select" value="{{id}}"/></td>
+            <td>{{businessType}}</td>
+            <td>{{discount}}</td>
+            <td><input type="button" value="修改" class="btn-default base-discount-update" data-update-id="{{id}}" /></td>
+        </tr>
+    {{/each}}
+</script>

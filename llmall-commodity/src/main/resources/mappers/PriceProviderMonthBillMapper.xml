@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.g2link.web.stream.model.mapper.PriceProviderMonthBillMapper">
+    <resultMap id="BaseResultMap" type="cn.g2link.bms.common.model.entity.price.PriceProviderMonthBill">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <id column="billId" jdbcType="BIGINT" property="bill_id" />
+        <result column="warehouse_code" jdbcType="VARCHAR" property="warehouseCode" />
+        <result column="warehouse_name" jdbcType="VARCHAR" property="warehouseName" />
+        <result column="owner_code" jdbcType="VARCHAR" property="ownerCode" />
+        <result column="owner_name" jdbcType="VARCHAR" property="ownerName" />
+        <result column="provider_code" jdbcType="VARCHAR" property="providerCode" />
+        <result column="provider_name" jdbcType="VARCHAR" property="providerName" />
+        <result column="provider_radio" jdbcType="DECIMAL" property="providerRadio" />
+        <result column="provider_fee" jdbcType="DECIMAL" property="providerFee" />
+        <result column="pay_service_code" jdbcType="VARCHAR" property="payServiceCode" />
+        <result column="flow_code" jdbcType="VARCHAR" property="flowCode" />
+        <result column="bill_time" jdbcType="TIMESTAMP" property="billTime" />
+        <result column="bill_paid_fee" jdbcType="DECIMAL" property="billPaidFee" />
+        <result column="bill_paid_datetime" jdbcType="TIMESTAMP" property="billPaidDatetime" />
+        <result column="bill_provider_datetime" jdbcType="TIMESTAMP" property="billProviderDatetime" />
+        <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+        <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bill_id, warehouse_code, warehouse_name, owner_code, owner_name, provider_code, provider_name,
+        provider_radio, provider_fee, pay_service_code, flow_code, bill_time, bill_paid_fee,
+        bill_paid_datetime, bill_provider_datetime, create_datetime, update_datetime
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from price_provider_month_bill
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from price_provider_month_bill
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="cn.g2link.bms.common.model.entity.price.PriceProviderMonthBill">
+        insert into price_provider_month_bill (bill_id, warehouse_code, warehouse_name,
+        owner_code, owner_name, provider_code,
+        provider_name, provider_radio, provider_fee,
+        pay_service_code, flow_code, bill_time,
+        bill_paid_fee, bill_paid_datetime, bill_provider_datetime)
+        values (#{billId, jdbcType=BIGINT}, #{warehouseCode,jdbcType=VARCHAR}, #{warehouseName,jdbcType=VARCHAR},
+        #{ownerCode,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, #{providerCode,jdbcType=VARCHAR},
+        #{providerName,jdbcType=VARCHAR}, #{providerRadio,jdbcType=DECIMAL}, #{providerFee,jdbcType=DECIMAL},
+        #{payServiceCode,jdbcType=VARCHAR}, #{flowCode,jdbcType=VARCHAR}, FROM_UNIXTIME(#{billTime,jdbcType=TIMESTAMP}/1000),
+        #{billPaidFee,jdbcType=DECIMAL}, FROM_UNIXTIME(#{billPaidDatetime,jdbcType=TIMESTAMP}/1000), CURRENT_TIMESTAMP)
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="cn.g2link.bms.common.model.entity.price.PriceProviderMonthBill">
+        update price_provider_month_bill
+        set warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+        owner_code = #{ownerCode,jdbcType=VARCHAR},
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+        provider_code = #{providerCode,jdbcType=VARCHAR},
+        provider_name = #{providerName,jdbcType=VARCHAR},
+        provider_radio = #{providerRadio,jdbcType=DECIMAL},
+        provider_fee = #{providerFee,jdbcType=DECIMAL},
+        pay_service_code = #{payServiceCode,jdbcType=VARCHAR},
+        flow_code = #{flowCode,jdbcType=VARCHAR},
+        bill_time = #{billTime,jdbcType=VARCHAR},
+        bill_paid_fee = #{billPaidFee,jdbcType=DECIMAL},
+        bill_paid_datetime = #{billPaidDatetime,jdbcType=TIMESTAMP},
+        bill_provider_datetime = #{billProviderDatetime,jdbcType=TIMESTAMP},
+        update_datetime = CURRENT_TIMESTAMP
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getProviderMonthBillSum" resultType="PriceProviderMonthFee">
+        SELECT
+            t1.provider_code AS providerCode,
+            t1.provider_name AS providerName,
+            t1.bill_provider_datetime as billTime,
+            SUM(t1.provider_fee) AS totalFee
+        FROM price_provider_month_bill t1
+        WHERE DATE_FORMAT(t1.bill_provider_datetime, '%Y-%m') = #{lastMonth}
+        GROUP BY t1.provider_code
+    </select>
+
+    <select id="countProviderMonthBill" resultType="int">
+        SELECT count(1) as providerMonthBillCount
+        FROM price_provider_month_bill t1;
+    </select>
+</mapper>

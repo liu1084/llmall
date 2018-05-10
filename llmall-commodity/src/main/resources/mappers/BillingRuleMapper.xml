@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.g2link.web.stream.model.mapper.BillingRuleMapper">
+    <resultMap id="BaseResultMap" type="cn.g2link.bms.common.model.entity.bill.BillingRule">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="warehouse_code" jdbcType="VARCHAR" property="warehouseCode"/>
+        <result column="warehouse_name" jdbcType="VARCHAR" property="warehouseName"/>
+        <result column="owner_code" jdbcType="VARCHAR" property="ownerCode"/>
+        <result column="owner_name" jdbcType="VARCHAR" property="ownerName"/>
+        <result column="bill_type" jdbcType="VARCHAR" property="billType"/>
+        <result column="bill_item" jdbcType="VARCHAR" property="billItem"/>
+        <result column="unit" jdbcType="INTEGER" property="unit"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="sub_price" jdbcType="DECIMAL" property="subPrice"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="enable" jdbcType="INTEGER" property="enable"/>
+        <result column="source" jdbcType="INTEGER" property="source"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, warehouse_code, warehouse_name, owner_code, owner_name, bill_type,
+        UNIX_TIMESTAMP(bill_item)*1000 AS bill_time, bill_item,
+        unit, price, sub_price, UNIX_TIMESTAMP(start_time)*1000 AS start_time,
+        UNIX_TIMESTAMP(end_time)*1000 AS end_time, enable, source
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from billing_billing_rule
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="getAllRule" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM billing_billing_rule;
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from billing_billing_rule
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="cn.g2link.bms.common.model.entity.bill.BillingRule">
+        insert into billing_billing_rule
+        (
+            warehouse_code, warehouse_name,
+            owner_code, owner_name, bill_type,
+            bill_item, unit, price, sub_price,
+            start_time, end_time, enable,
+            source
+        )
+        values (
+            #{warehouseCode,jdbcType=VARCHAR}, #{warehouseName,jdbcType=VARCHAR},
+            #{ownerCode,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, #{billType,jdbcType=VARCHAR},
+            #{billItem,jdbcType=VARCHAR}, #{unit,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL},#{subPrice,jdbcType=DECIMAL},
+            FROM_UNIXTIME(#{startTime,jdbcType=TIMESTAMP}/1000), FROM_UNIXTIME(#{endTime,jdbcType=TIMESTAMP}/1000),
+            #{enable,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into billing_billing_rule
+        (
+        warehouse_code, warehouse_name,
+        owner_code, owner_name, bill_type,
+        bill_item, unit, price, sub_price,
+        start_time, end_time, enable,
+        source
+        )
+        values
+        <foreach collection="list" item="element" index="index" open="(" separator="),(" close=")">
+            #{element.warehouseCode,jdbcType=VARCHAR}, #{element.warehouseName,jdbcType=VARCHAR},
+            #{element.ownerCode,jdbcType=VARCHAR}, #{element.ownerName,jdbcType=VARCHAR}, #{element.billType,jdbcType=VARCHAR},
+            #{element.billItem,jdbcType=VARCHAR}, #{element.unit,jdbcType=INTEGER}, #{element.price,jdbcType=DECIMAL},#{element.subPrice,jdbcType=DECIMAL},
+            FROM_UNIXTIME(#{element.startTime,jdbcType=TIMESTAMP}/1000), FROM_UNIXTIME(#{element.endTime,jdbcType=TIMESTAMP}/1000),
+            #{element.enable,jdbcType=INTEGER}, #{element.source,jdbcType=INTEGER}
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective" parameterType="cn.g2link.bms.common.model.entity.bill.BillingRule">
+        insert into billing_billing_rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="warehouseCode != null">
+                warehouse_code,
+            </if>
+            <if test="warehouseName != null">
+                warehouse_name,
+            </if>
+            <if test="ownerCode != null">
+                owner_code,
+            </if>
+            <if test="ownerName != null">
+                owner_name,
+            </if>
+            <if test="billType != null">
+                bill_type,
+            </if>
+            <if test="billItem != null">
+                bill_item,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="subPrice != null">
+                subPrice,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="enable != null">
+                enable,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="warehouseCode != null">
+                #{warehouseCode,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseName != null">
+                #{warehouseName,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerCode != null">
+                #{ownerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerName != null">
+                #{ownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="billType != null">
+                #{billType,jdbcType=VARCHAR},
+            </if>
+            <if test="billItem != null">
+                #{billItem,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=INTEGER},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="subPrice != null">
+                #{subPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enable != null">
+                #{enable,jdbcType=INTEGER},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.g2link.bms.common.model.entity.bill.BillingRule">
+        update billing_billing_rule
+        <set>
+            <if test="warehouseCode != null">
+                warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseName != null">
+                warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerCode != null">
+                owner_code = #{ownerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerName != null">
+                owner_name = #{ownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="billType != null">
+                bill_type = #{billType,jdbcType=VARCHAR},
+            </if>
+            <if test="billItem != null">
+                bill_item = #{billItem,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=INTEGER},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="subPrice != null">
+                sub_price = #{subPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enable != null">
+                enable = #{enable,jdbcType=INTEGER},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="cn.g2link.bms.common.model.entity.bill.BillingRule">
+        UPDATE billing_billing_rule
+        SET
+            warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+            warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+            owner_code = #{ownerCode,jdbcType=VARCHAR},
+            owner_name = #{ownerName,jdbcType=VARCHAR},
+            bill_type = #{billType,jdbcType=VARCHAR},
+            bill_item = #{billItem,jdbcType=VARCHAR},
+            unit = #{unit,jdbcType=INTEGER},
+            price = #{price,jdbcType=DECIMAL},
+            sub_price = #{subPrice,jdbcType=DECIMAL},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            enable = #{enable,jdbcType=INTEGER},
+            source = #{source,jdbcType=INTEGER}
+        WHERE
+            id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
