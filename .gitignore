@@ -39,3 +39,6 @@ log.path_IS_UNDEFINED/
 mvnw
 mvnw.cmd
 *.diff
+vendor
+node_modules
+swagger

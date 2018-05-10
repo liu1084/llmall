@@ -7,6 +7,9 @@
 #
 # These files are text and should be normalized (Convert crlf => lf)
 *.css           text    linguist-vendored
+*.scss          text    linguist-vendored
+*.sass          text    linguist-vendored
+*.less          text    linguist-vendored
 *.df            text    linguist-vendored
 *.htm           text    linguist-vendored
 *.html          text    linguist-vendored
