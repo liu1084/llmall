@@ -38,8 +38,7 @@
         <xxl-job-core.version>1.9.0</xxl-job-core.version>
         <data-exporter.version>1.0.5</data-exporter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <bms-service.version>1.7.7</bms-service.version>
-        <bms-common.version>2.6.6</bms-common.version>
+        <llmall-common.version>1.0</llmall-common.version>
     </properties>
     <repositories>
         <repository>
@@ -259,6 +258,12 @@
                 <groupId>com.brsanthu</groupId>
                 <artifactId>data-exporter</artifactId>
                 <version>${data-exporter.version}</version>
+            </dependency>
+            <!--llmall dependencies-->
+            <dependency>
+                <groupId>biz.llmall.common</groupId>
+                <artifactId>llmall-common</artifactId>
+                <version>${llmall-common.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -4,7 +4,7 @@
 
     <springProperty scope="context" name="log.level" source="logging.level.root" defaultValue="DEBUG"/>
     <springProperty scope="context" name="log.path" source="logging.path" defaultValue="/data/web_log/java/stream"/>
-    <springProperty scope="context" name="log.file" source="logging.file" defaultValue="stream"/>
+    <springProperty scope="context" name="log.file" source="logging.file" defaultValue="llmall"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
@@ -24,7 +24,7 @@
     </appender>
 
     <logger name="org.apache.kafka" level="ERROR"/>
-    <logger name="cn.g2link.web" level="DEBUG"/>
+    <logger name="biz.llmall.commodity" level="DEBUG"/>
     <logger name="org.mybatis" level="DEBUG"/>
     <logger name="org.springframework" level="INFO"/>
     <logger name="org.apache.http" level="INFO"/>

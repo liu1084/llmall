@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="biz.llmall.commodity.model.mapper.CommodityMapper">
+    <resultMap id="BaseResultMap" type="biz.llmall.common.entity.Commodity">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="brand_id" jdbcType="BIGINT" property="brandId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="cotegory_id" jdbcType="BIGINT" property="cotegoryId"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <association property="brand" javaType="biz.llmall.common.entity.Brand">
+            <id column="brand_id" property="brandId"/>
+        </association>
+        <collection property="images" column="commodity_id" ofType="biz.llmall.common.entity.CommodityImage">
+            <id column="commodity_id" property="commodityId"/>
+        </collection>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="biz.llmall.common.entity.Commodity">
+        <result column="description" jdbcType="LONGVARCHAR" property="description"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, brand_id, name, price, cotegory_id, parent_id, create_time, update_time
+    </sql>
+    <sql id="Blob_Column_List">
+        description
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from commodity
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from commodity
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="biz.llmall.common.entity.Commodity">
+        insert into commodity (id, brand_id, name,
+        price, cotegory_id, parent_id,
+        create_time, update_time, description
+        )
+        values (#{id,jdbcType=BIGINT}, #{brandId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+        #{price,jdbcType=DECIMAL}, #{cotegoryId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="biz.llmall.common.entity.Commodity">
+        update commodity
+        set brand_id = #{brandId,jdbcType=BIGINT},
+        name = #{name,jdbcType=VARCHAR},
+        price = #{price,jdbcType=DECIMAL},
+        cotegory_id = #{cotegoryId,jdbcType=BIGINT},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        description = #{description,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.Commodity">
+        update commodity
+        set brand_id = #{brandId,jdbcType=BIGINT},
+        name = #{name,jdbcType=VARCHAR},
+        price = #{price,jdbcType=DECIMAL},
+        cotegory_id = #{cotegoryId,jdbcType=BIGINT},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="getCommoditiesByBrandId" resultMap="BaseResultMap" parameterType="long">
+        SELECT * FROM commodity t1
+        WHERE t1.brand_id = #{brandId, jdbcType=BIGINT}
+    </select>
+</mapper>
