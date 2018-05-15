@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="biz.llmall.commodity.model.mapper.CategoryMapper">
-    <resultMap id="BaseResultMap" type="biz.llmall.common.entity.Category">
+    <resultMap id="BaseResultMap" type="biz.llmall.common.entity.commodity.Category">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
@@ -21,13 +21,13 @@
         delete from category
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="biz.llmall.common.entity.Category">
+    <insert id="insert" parameterType="biz.llmall.common.entity.commodity.Category">
         insert into category (id, name, parent_id,
         create_time, update_time)
         values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT},
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
-    <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.Category">
+    <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.Category">
         update category
         set name = #{name,jdbcType=VARCHAR},
         parent_id = #{parentId,jdbcType=BIGINT},

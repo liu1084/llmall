@@ -1,5 +1,5 @@
 package biz.llmall.commodity.model.service;
-import biz.llmall.common.entity.Brand;
+import biz.llmall.common.entity.commodity.Brand;
 
 import java.util.List;
 

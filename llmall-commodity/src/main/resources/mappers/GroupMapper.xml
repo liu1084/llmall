@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="biz.llmall.commodity.model.mapper.GroupMapper">
-  <resultMap id="BaseResultMap" type="biz.llmall.common.entity.Group">
+  <resultMap id="BaseResultMap" type="biz.llmall.common.entity.user.Group">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="role" jdbcType="VARCHAR" property="role" />
@@ -21,13 +21,13 @@
     delete from group
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="biz.llmall.common.entity.Group">
+  <insert id="insert" parameterType="biz.llmall.common.entity.user.Group">
     insert into group (id, name, role, 
       create_time, update_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.Group">
+  <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.user.Group">
     update group
     set name = #{name,jdbcType=VARCHAR},
       role = #{role,jdbcType=VARCHAR},

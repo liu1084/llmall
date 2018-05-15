@@ -1,4 +1,4 @@
-package biz.llmall.common.entity;
+package biz.llmall.common.entity.commodity;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,6 +12,7 @@ public class Brand {
     private String logoBig;
     private String logoMiddle;
     private String logoSmall;
+    private String description;
     private Date createTime;
     private Date updateTime;
     private Set<Commodity> commodities;

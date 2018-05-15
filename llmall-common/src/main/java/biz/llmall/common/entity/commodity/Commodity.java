@@ -1,4 +1,4 @@
-package biz.llmall.common.entity;
+package biz.llmall.common.entity.commodity;
 import lombok.Data;
 
 import java.math.BigDecimal;

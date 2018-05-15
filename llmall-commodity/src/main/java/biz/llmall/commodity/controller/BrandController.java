@@ -1,6 +1,6 @@
 package biz.llmall.commodity.controller;
 import biz.llmall.commodity.model.service.IBrandService;
-import biz.llmall.common.entity.Brand;
+import biz.llmall.common.entity.commodity.Brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

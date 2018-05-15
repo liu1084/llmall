@@ -1,5 +1,5 @@
 package biz.llmall.commodity.model.mapper;
-import biz.llmall.common.entity.Role;
+import biz.llmall.common.entity.user.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

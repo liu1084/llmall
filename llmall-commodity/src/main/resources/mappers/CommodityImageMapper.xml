@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="biz.llmall.commodity.model.mapper.CommodityImageMapper">
-    <resultMap id="BaseResultMap" type="biz.llmall.common.entity.CommodityImage">
+    <resultMap id="BaseResultMap" type="biz.llmall.common.entity.commodity.CommodityImage">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="commodity_id" jdbcType="BIGINT" property="commodityId"/>
         <result column="url" jdbcType="VARCHAR" property="url"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <association property="commodityId" javaType="biz.llmall.common.entity.Commodity">
+        <association property="commodityId" javaType="biz.llmall.common.entity.commodity.Commodity">
             <id column="commodity_id" property="commodityId"/>
         </association>
     </resultMap>
@@ -24,13 +24,13 @@
         delete from commodity_image
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="biz.llmall.common.entity.CommodityImage">
+    <insert id="insert" parameterType="biz.llmall.common.entity.commodity.CommodityImage">
         insert into commodity_image (id, commodity_id, url,
         create_time, update_time)
         values (#{id,jdbcType=BIGINT}, #{commodityId,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR},
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
-    <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.CommodityImage">
+    <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.CommodityImage">
         update commodity_image
         set commodity_id = #{commodityId,jdbcType=BIGINT},
         url = #{url,jdbcType=VARCHAR},

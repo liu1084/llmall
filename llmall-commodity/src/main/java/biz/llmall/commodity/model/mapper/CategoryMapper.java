@@ -1,5 +1,5 @@
 package biz.llmall.commodity.model.mapper;
-import biz.llmall.common.entity.Category;
+import biz.llmall.common.entity.commodity.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

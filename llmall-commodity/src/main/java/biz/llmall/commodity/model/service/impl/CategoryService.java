@@ -1,7 +1,7 @@
 package biz.llmall.commodity.model.service.impl;
 import biz.llmall.commodity.model.mapper.CategoryMapper;
 import biz.llmall.commodity.model.service.ICategoryService;
-import biz.llmall.common.entity.Category;
+import biz.llmall.common.entity.commodity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

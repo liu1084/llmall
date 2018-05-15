@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="biz.llmall.commodity.model.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="biz.llmall.common.entity.User">
+  <resultMap id="BaseResultMap" type="biz.llmall.common.entity.user.User">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="group_id" jdbcType="BIGINT" property="groupId" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
@@ -26,7 +26,7 @@
     delete from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="biz.llmall.common.entity.User">
+  <insert id="insert" parameterType="biz.llmall.common.entity.user.User">
     insert into user (id, group_id, nickname, 
       email, mobile, password, 
       salt, enable, create_time, 
@@ -36,7 +36,7 @@
       #{salt,jdbcType=VARCHAR}, #{enable,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.User">
+  <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.user.User">
     update user
     set group_id = #{groupId,jdbcType=BIGINT},
       nickname = #{nickname,jdbcType=VARCHAR},

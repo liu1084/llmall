@@ -1,6 +1,6 @@
 package biz.llmall.commodity.controller;
 import biz.llmall.commodity.model.service.ICategoryService;
-import biz.llmall.common.entity.Category;
+import biz.llmall.common.entity.commodity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

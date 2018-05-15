@@ -1,6 +1,5 @@
 package biz.llmall.commodity.model.service;
-import biz.llmall.common.entity.Category;
-import org.springframework.stereotype.Service;
+import biz.llmall.common.entity.commodity.Category;
 
 import java.util.List;
 

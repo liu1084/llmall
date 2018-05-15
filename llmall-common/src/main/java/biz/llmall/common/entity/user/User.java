@@ -1,4 +1,4 @@
-package biz.llmall.common.entity;
+package biz.llmall.common.entity.user;
 import lombok.Data;
 
 import java.util.Date;
