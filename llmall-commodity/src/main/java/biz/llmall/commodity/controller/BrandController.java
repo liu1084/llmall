@@ -1,6 +1,6 @@
 package biz.llmall.commodity.controller;
-import biz.llmall.commodity.model.service.ICategoryService;
-import biz.llmall.common.entity.Category;
+import biz.llmall.commodity.model.service.IBrandService;
+import biz.llmall.common.entity.Brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/category")
-public class CategoryController {
+@RequestMapping(value = "/brand")
+public class BrandController {
     @Autowired
-    private ICategoryService categoryService;
+    private IBrandService brandService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Category> getCategories() {
-        return categoryService.getCategories();
+    public List<Brand> getBrands() {
+        return brandService.findBrands();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Category getCategoryById(@PathVariable("id") Long id) {
-        return categoryService.findCategoryById(id);
+    public Brand getBrandById(@PathVariable("id") Long id) {
+        return brandService.findBrandById(id);
     }
 }

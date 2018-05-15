@@ -7,7 +7,7 @@
         <result column="url" jdbcType="VARCHAR" property="url"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <association property="commodityId" column="commodity_id">
+        <association property="commodityId" javaType="biz.llmall.common.entity.Commodity">
             <id column="commodity_id" property="commodityId"/>
         </association>
     </resultMap>

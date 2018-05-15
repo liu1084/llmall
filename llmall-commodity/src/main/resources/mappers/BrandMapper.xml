@@ -10,7 +10,7 @@
         <result column="logo_sm" jdbcType="VARCHAR" property="logoSm"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <collection property="commodities" ofType="biz.llmall.common.entity.Commodity">
+        <collection property="commodities" ofType="biz.llmall.common.entity.Commodity" fetchType="lazy">
             <id column="commodity_id" property="commodityId"/>
         </collection>
     </resultMap>
@@ -46,4 +46,10 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
+    <select id="findBrands" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `brand` t1
+        where 1=1
+    </select>
 </mapper>

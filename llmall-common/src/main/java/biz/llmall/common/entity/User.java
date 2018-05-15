@@ -2,6 +2,7 @@ package biz.llmall.common.entity;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 public class User {
@@ -15,4 +16,6 @@ public class User {
     private Boolean enable;
     private Date createTime;
     private Date updateTime;
+    private Set<Role> roles;
+    private Set<Group> groups;
 }

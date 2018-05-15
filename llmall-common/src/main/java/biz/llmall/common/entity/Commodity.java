@@ -17,5 +17,4 @@ public class Commodity {
     private Date updateTime;
     private String description;
     private Set<CommodityImage> commodityImages;
-
 }

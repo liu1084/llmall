@@ -10,10 +10,13 @@
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <association property="brand" javaType="biz.llmall.common.entity.Brand">
+        <association property="brand" javaType="biz.llmall.common.entity.Brand" fetchType="lazy">
             <id column="brand_id" property="brandId"/>
         </association>
-        <collection property="images" column="commodity_id" ofType="biz.llmall.common.entity.CommodityImage">
+        <collection property="images"
+                    column="commodity_id"
+                    ofType="biz.llmall.common.entity.CommodityImage"
+                    fetchType="lazy">
             <id column="commodity_id" property="commodityId"/>
         </collection>
     </resultMap>
@@ -74,5 +77,9 @@
     <select id="getCommoditiesByBrandId" resultMap="BaseResultMap" parameterType="long">
         SELECT * FROM commodity t1
         WHERE t1.brand_id = #{brandId, jdbcType=BIGINT}
+    </select>
+    <select id="findCommodities" resultMap="BaseResultMap">
+        select * from commodity t1
+        where 1=1
     </select>
 </mapper>
