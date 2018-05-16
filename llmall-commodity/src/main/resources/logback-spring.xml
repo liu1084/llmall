@@ -3,7 +3,7 @@
     <contextName>llmall</contextName>
 
     <springProperty scope="context" name="log.level" source="logging.level.root" defaultValue="DEBUG"/>
-    <springProperty scope="context" name="log.path" source="logging.path" defaultValue=""/>
+    <springProperty scope="context" name="log.path" source="logging.path" defaultValue="target"/>
     <springProperty scope="context" name="log.file" source="logging.file" defaultValue="llmall"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

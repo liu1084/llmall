@@ -1,19 +1,19 @@
 package biz.llmall.common.entity.commodity;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Data
-public class Brand {
+public class Brand implements Serializable {
     private Long id;
-    private String name;
-    private String shortName;
-    private String logoBig;
-    private String logoMiddle;
-    private String logoSmall;
+    private String brandName;
+    private String logoLg;
+    private String logoMd;
+    private String logoSm;
     private String description;
     private Date createTime;
     private Date updateTime;
-    private Set<Commodity> commodities;
+    private List<Commodity> commodities;
 }

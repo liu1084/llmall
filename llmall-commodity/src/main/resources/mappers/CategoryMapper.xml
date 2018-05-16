@@ -7,10 +7,64 @@
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+	    <collection property="commodities"
+	                column="id"
+	                ofType="biz.llmall.common.entity.commodity.Commodity"
+	                select="selectCommodityByPrimaryKey"/>
     </resultMap>
+	<resultMap id="commodityBaseResultMap" type="biz.llmall.common.entity.commodity.Commodity">
+		<id column="id" jdbcType="BIGINT" property="id"/>
+		<result column="brand_id" jdbcType="BIGINT" property="brandId"/>
+		<result column="name" jdbcType="VARCHAR" property="CommodityName"/>
+		<result column="price" jdbcType="DECIMAL" property="price"/>
+		<result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+		<collection property="commodityImages"
+		            ofType="biz.llmall.common.entity.commodity.CommodityImage"
+					column="id"
+					select="selectCommodityImagesByPrimaryKey"/>
+	</resultMap>
+	<resultMap extends="commodityBaseResultMap" id="ResultMapWithBLOBs" type="biz.llmall.common.entity.commodity.Commodity">
+		<result column="description" jdbcType="LONGVARCHAR" property="description"/>
+	</resultMap>
+	<!--categories-->
     <sql id="Base_Column_List">
         id, name, parent_id, create_time, update_time
     </sql>
+	<!--commodity-->
+	<sql id="Commodity_Base_Column_List">
+        id, brand_id, name, price, category_id, create_time, update_time
+    </sql>
+	<sql id="Commodity_Blob_Column_List">
+        description
+    </sql>
+
+	<!--commodity images-->
+	<resultMap id="CommodityImageBaseResultMap" type="biz.llmall.common.entity.commodity.CommodityImage">
+		<id column="id" jdbcType="BIGINT" property="id"/>
+		<result column="commodity_id" jdbcType="BIGINT" property="commodityId"/>
+		<result column="url" jdbcType="VARCHAR" property="url"/>
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+	</resultMap>
+	<sql id="Commodity_Image_Base_Column_List">
+        id, commodity_id, url, create_time, update_time
+    </sql>
+	<select id="selectCommodityImagesByPrimaryKey" parameterType="java.lang.Long" resultMap="CommodityImageBaseResultMap">
+		select
+		<include refid="Commodity_Image_Base_Column_List"/>
+		from commodity_image
+		where commodity_id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectCommodityByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Commodity_Base_Column_List"/>
+		,
+		<include refid="Commodity_Blob_Column_List"/>
+		from commodity
+		where brand_id = #{id,jdbcType=BIGINT}
+	</select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

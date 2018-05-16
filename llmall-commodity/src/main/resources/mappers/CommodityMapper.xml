@@ -4,19 +4,16 @@
     <resultMap id="BaseResultMap" type="biz.llmall.common.entity.commodity.Commodity">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="brand_id" jdbcType="BIGINT" property="brandId"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="name" jdbcType="VARCHAR" property="CommodityName"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
-        <result column="cotegory_id" jdbcType="BIGINT" property="cotegoryId"/>
-        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <association property="brand" javaType="biz.llmall.common.entity.commodity.Brand" fetchType="lazy">
-            <id column="brand_id" property="brandId"/>
-        </association>
-        <collection property="images"
-                    column="commodity_id"
-                    ofType="biz.llmall.common.entity.commodity.CommodityImage"
-                    fetchType="lazy">
+        <collection
+		        property="commodityImages"
+		        column="id"
+		        ofType="biz.llmall.common.entity.commodity.CommodityImage"
+                select="CommodityImageBaseResultMap">
             <id column="commodity_id" property="commodityId"/>
         </collection>
     </resultMap>
@@ -24,11 +21,26 @@
         <result column="description" jdbcType="LONGVARCHAR" property="description"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, brand_id, name, price, cotegory_id, parent_id, create_time, update_time
+        id, brand_id, name, price, category_id, create_time, update_time
     </sql>
     <sql id="Blob_Column_List">
         description
     </sql>
+
+	<resultMap id="CommodityImageBaseResultMap" type="biz.llmall.common.entity.commodity.CommodityImage">
+		<id column="id" jdbcType="BIGINT" property="id"/>
+		<result column="commodity_id" jdbcType="BIGINT" property="commodityId"/>
+		<result column="url" jdbcType="VARCHAR" property="url"/>
+	</resultMap>
+	<sql id="Commodity_Image_Base_Column_List">
+        id, commodity_id, url, create_time, update_time
+    </sql>
+	<select id="selectCommodityImageByPrimaryKey" parameterType="java.lang.Long" resultMap="CommodityImageBaseResultMap">
+		select
+		<include refid="Commodity_Image_Base_Column_List"/>
+		from commodity_image
+		where commodity_id = #{id,jdbcType=BIGINT}
+	</select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
@@ -43,11 +55,11 @@
     </delete>
     <insert id="insert" parameterType="biz.llmall.common.entity.commodity.Commodity">
         insert into commodity (id, brand_id, name,
-        price, cotegory_id, parent_id,
+        price, category_id,
         create_time, update_time, description
         )
         values (#{id,jdbcType=BIGINT}, #{brandId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
-        #{price,jdbcType=DECIMAL}, #{cotegoryId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT},
+        #{price,jdbcType=DECIMAL}, #{categoryId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT},
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR}
         )
     </insert>
@@ -56,8 +68,7 @@
         set brand_id = #{brandId,jdbcType=BIGINT},
         name = #{name,jdbcType=VARCHAR},
         price = #{price,jdbcType=DECIMAL},
-        cotegory_id = #{cotegoryId,jdbcType=BIGINT},
-        parent_id = #{parentId,jdbcType=BIGINT},
+        category_id = #{categoryId,jdbcType=BIGINT},
         create_time = #{createTime,jdbcType=TIMESTAMP},
         update_time = #{updateTime,jdbcType=TIMESTAMP},
         description = #{description,jdbcType=LONGVARCHAR}
@@ -68,8 +79,7 @@
         set brand_id = #{brandId,jdbcType=BIGINT},
         name = #{name,jdbcType=VARCHAR},
         price = #{price,jdbcType=DECIMAL},
-        cotegory_id = #{cotegoryId,jdbcType=BIGINT},
-        parent_id = #{parentId,jdbcType=BIGINT},
+        category_id = #{categoryId,jdbcType=BIGINT},
         create_time = #{createTime,jdbcType=TIMESTAMP},
         update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}

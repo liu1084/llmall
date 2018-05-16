@@ -45,7 +45,14 @@
             <id>central</id>
             <url>http://central.maven.org/maven2/</url>
         </repository>
-
+	    <repository>
+		    <id>oss-sonatype</id>
+		    <name>oss-sonatype</name>
+		    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		    <snapshots>
+			    <enabled>true</enabled>
+		    </snapshots>
+	    </repository>
     </repositories>
     <dependencyManagement>
         <dependencies>
@@ -285,8 +292,13 @@
                 <artifactId>bms-service</artifactId>
                 <version>1.7.9</version>
             </dependency>
+			<!--text table-->
+	        <dependency>
+		        <groupId>com.github.inamik.text.tables</groupId>
+		        <artifactId>inamik-text-tables</artifactId>
+		        <version>1.0-SNAPSHOT</version>
+	        </dependency>
         </dependencies>
-
     </dependencyManagement>
     <distributionManagement>
         <repository>
