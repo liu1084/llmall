@@ -1,6 +1,4 @@
 package biz.llmall.common.entity.user;
-import biz.llmall.common.entity.user.Role;
-import biz.llmall.common.entity.user.User;
 import lombok.Data;
 
 import java.util.Date;
