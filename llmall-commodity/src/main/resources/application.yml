@@ -39,7 +39,7 @@ swagger:
     name: 刘军
     email: liu1084@gmail.com
   base-package: biz.llmall.commodity
-  base-path: /category/**
+  base-path: /api/**
   exclude-path: /error, /ops/**
   enabled: true
 

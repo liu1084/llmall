@@ -18,6 +18,6 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category findCategoryById(Long id) {
-        return categoryMapper.selectByPrimaryKey(id);
+        return categoryMapper.selectCategoryByPrimaryKey(id);
     }
 }

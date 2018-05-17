@@ -8,11 +8,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CategoryMapper {
-    int deleteByPrimaryKey(Long id);
-    int insert(Category record);
-    int insertSelective(Category record);
-    Category selectByPrimaryKey(Long id);
-    int updateByPrimaryKeySelective(Category record);
-    int updateByPrimaryKey(Category record);
+    int deleteCategoryByPrimaryKey(Long id);
+    int insertCategory(Category record);
+    Category selectCategoryByPrimaryKey(Long id);
+    int updateCategoryByPrimaryKey(Category record);
     List<Category> findCategories();
 }

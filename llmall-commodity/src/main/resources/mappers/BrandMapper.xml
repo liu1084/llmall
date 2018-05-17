@@ -28,21 +28,54 @@
 		            column="id"
 		            select="selectCommodityImagesByPrimaryKey"/>
 	</resultMap>
-	<resultMap extends="commodityBaseResultMap" id="ResultMapWithBLOBs" type="biz.llmall.common.entity.commodity.Commodity">
-		<result column="description" jdbcType="LONGVARCHAR" property="description"/>
-	</resultMap>
 	<!--brand-->
     <sql id="Brand_Base_Column_List">
         id, name,  logo_lg, logo_md, logo_sm, create_time, update_time
     </sql>
+	<select id="selectBrandByPrimaryKey" parameterType="java.lang.Long" resultMap="brandBaseResultMap">
+		select
+		<include refid="Brand_Base_Column_List"/>
+		from brand
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteBrandByPrimaryKey" parameterType="java.lang.Long">
+        delete from brand
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+	<insert id="insertBrand" parameterType="biz.llmall.common.entity.commodity.Brand">
+        insert into brand (id, name,
+        logo_lg, logo_md, logo_sm,
+        create_time, update_time)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR},
+        #{logoLg,jdbcType=VARCHAR}, #{logoMd,jdbcType=VARCHAR}, #{logoSm,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+	<update id="updateBrandByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.Brand">
+        update brand
+        set name = #{name,jdbcType=VARCHAR},
+        logo_lg = #{logoLg,jdbcType=VARCHAR},
+        logo_md = #{logoMd,jdbcType=VARCHAR},
+        logo_sm = #{logoSm,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+	<select id="findBrands" resultMap="brandBaseResultMap">
+		select
+		<include refid="Brand_Base_Column_List"/>
+		from `brand` t1
+		where 1=1
+	</select>
 	<!--commodity-->
+	<resultMap extends="commodityBaseResultMap" id="ResultMapWithBLOBs" type="biz.llmall.common.entity.commodity.Commodity">
+		<result column="description" jdbcType="LONGVARCHAR" property="description"/>
+	</resultMap>
 	<sql id="Commodity_Base_Column_List">
         id, brand_id, name, price, category_id, create_time, update_time
     </sql>
 	<sql id="Commodity_Blob_Column_List">
         description
     </sql>
-
 	<select id="selectCommodityByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
 		select
 		<include refid="Commodity_Base_Column_List"/>
@@ -51,7 +84,6 @@
 		from commodity
 		where brand_id = #{id,jdbcType=BIGINT}
 	</select>
-
 	<!--commodity images-->
 	<resultMap id="CommodityImageBaseResultMap" type="biz.llmall.common.entity.commodity.CommodityImage">
 		<id column="id" jdbcType="BIGINT" property="id"/>
@@ -69,39 +101,4 @@
 		from commodity_image
 		where commodity_id = #{id,jdbcType=BIGINT}
 	</select>
-
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="brandBaseResultMap">
-        select
-        <include refid="Brand_Base_Column_List"/>
-        from brand
-        where id = #{id,jdbcType=BIGINT}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from brand
-        where id = #{id,jdbcType=BIGINT}
-        </delete>
-        <insert id="insert" parameterType="biz.llmall.common.entity.commodity.Brand">
-        insert into brand (id, name, 
-        logo_lg, logo_md, logo_sm,
-        create_time, update_time)
-        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR},
-        #{logoLg,jdbcType=VARCHAR}, #{logoMd,jdbcType=VARCHAR}, #{logoSm,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
-    </insert>
-    <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.Brand">
-        update brand
-        set name = #{name,jdbcType=VARCHAR},
-        logo_lg = #{logoLg,jdbcType=VARCHAR},
-        logo_md = #{logoMd,jdbcType=VARCHAR},
-        logo_sm = #{logoSm,jdbcType=VARCHAR},
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-        update_time = #{updateTime,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-    <select id="findBrands" resultMap="brandBaseResultMap">
-        select
-        <include refid="Brand_Base_Column_List"/>
-        from `brand` t1
-        where 1=1
-    </select>
 </mapper>

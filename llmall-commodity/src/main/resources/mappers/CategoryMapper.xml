@@ -1,87 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="biz.llmall.commodity.model.mapper.CategoryMapper">
-    <resultMap id="BaseResultMap" type="biz.llmall.common.entity.commodity.Category">
+    <resultMap id="CategoryBaseResultMap" type="biz.llmall.common.entity.commodity.Category">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-	    <collection property="commodities"
+	    <collection property="categories"
 	                column="id"
-	                ofType="biz.llmall.common.entity.commodity.Commodity"
-	                select="selectCommodityByPrimaryKey"/>
+	                ofType="biz.llmall.common.entity.commodity.Category"
+	                select="selectCategoryByParentId"/>
     </resultMap>
-	<resultMap id="commodityBaseResultMap" type="biz.llmall.common.entity.commodity.Commodity">
-		<id column="id" jdbcType="BIGINT" property="id"/>
-		<result column="brand_id" jdbcType="BIGINT" property="brandId"/>
-		<result column="name" jdbcType="VARCHAR" property="CommodityName"/>
-		<result column="price" jdbcType="DECIMAL" property="price"/>
-		<result column="category_id" jdbcType="BIGINT" property="categoryId"/>
-		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-		<collection property="commodityImages"
-		            ofType="biz.llmall.common.entity.commodity.CommodityImage"
-					column="id"
-					select="selectCommodityImagesByPrimaryKey"/>
-	</resultMap>
-	<resultMap extends="commodityBaseResultMap" id="ResultMapWithBLOBs" type="biz.llmall.common.entity.commodity.Commodity">
-		<result column="description" jdbcType="LONGVARCHAR" property="description"/>
-	</resultMap>
 	<!--categories-->
     <sql id="Base_Column_List">
         id, name, parent_id, create_time, update_time
     </sql>
-	<!--commodity-->
-	<sql id="Commodity_Base_Column_List">
-        id, brand_id, name, price, category_id, create_time, update_time
-    </sql>
-	<sql id="Commodity_Blob_Column_List">
-        description
-    </sql>
-
-	<!--commodity images-->
-	<resultMap id="CommodityImageBaseResultMap" type="biz.llmall.common.entity.commodity.CommodityImage">
-		<id column="id" jdbcType="BIGINT" property="id"/>
-		<result column="commodity_id" jdbcType="BIGINT" property="commodityId"/>
-		<result column="url" jdbcType="VARCHAR" property="url"/>
-		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-	</resultMap>
-	<sql id="Commodity_Image_Base_Column_List">
-        id, commodity_id, url, create_time, update_time
-    </sql>
-	<select id="selectCommodityImagesByPrimaryKey" parameterType="java.lang.Long" resultMap="CommodityImageBaseResultMap">
+	<select id="selectCategoryByPrimaryKey" parameterType="java.lang.Long" resultMap="CategoryBaseResultMap">
 		select
-		<include refid="Commodity_Image_Base_Column_List"/>
-		from commodity_image
-		where commodity_id = #{id,jdbcType=BIGINT}
+		<include refid="Base_Column_List"/>
+		from category
+		where id = #{id,jdbcType=BIGINT}
 	</select>
-	<select id="selectCommodityByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+	<select id="selectCategoryByParentId" parameterType="java.lang.Long" resultMap="CategoryBaseResultMap">
 		select
-		<include refid="Commodity_Base_Column_List"/>
-		,
-		<include refid="Commodity_Blob_Column_List"/>
-		from commodity
-		where brand_id = #{id,jdbcType=BIGINT}
+		<include refid="Base_Column_List"/>
+		from category
+		where parent_id = #{id,jdbcType=BIGINT}
 	</select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from category
-        where id = #{id,jdbcType=BIGINT}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	<delete id="deleteCategoryByPrimaryKey" parameterType="java.lang.Long">
         delete from category
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="biz.llmall.common.entity.commodity.Category">
+	<insert id="insertCategory" parameterType="biz.llmall.common.entity.commodity.Category">
         insert into category (id, name, parent_id,
         create_time, update_time)
         values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT},
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
-    <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.Category">
+	<update id="updateCategoryByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.Category">
         update category
         set name = #{name,jdbcType=VARCHAR},
         parent_id = #{parentId,jdbcType=BIGINT},
@@ -89,7 +46,7 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="findCategories" resultMap="BaseResultMap">
+	<select id="findCategories" resultMap="CategoryBaseResultMap">
         select * from category t1
         where 1=1;
     </select>

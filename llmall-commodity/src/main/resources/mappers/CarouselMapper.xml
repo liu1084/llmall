@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="biz.llmall.commodity.model.mapper.CarouselMapper">
+	<resultMap id="CarouselBaseResultMap" type="biz.llmall.common.entity.carousel.Carousel">
+		<id column="id" jdbcType="BIGINT" property="id"/>
+		<result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+		<result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+		<result column="round_at_last" jdbcType="BIT" property="roundAtLast"/>
+		<result column="auto" jdbcType="BIT" property="auto"/>
+		<result column="order" jdbcType="BIT" property="order"/>
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+		<collection property="carouselImages"
+		            ofType="biz.llmall.common.entity.carousel.CarouselImage"
+		            column="id"
+		            select="selectCarouselImageByPrimaryKey"/>
+	</resultMap>
+	<!--carousel-->
+	<sql id="Carousel_Base_Column_List">
+	    id, start_time, end_time, round_at_last, auto, `order`, create_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="CarouselBaseResultMap">
+		select
+		<include refid="Carousel_Base_Column_List"/>
+		from carousel
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<!--carousel image-->
+	<resultMap id="CarouselImageBaseResultMap" type="biz.llmall.common.entity.carousel.CarouselImage">
+		<id column="id" jdbcType="BIGINT" property="id"/>
+		<result column="carousel_id" jdbcType="BIGINT" property="carouselId"/>
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="width" jdbcType="DOUBLE" property="width"/>
+		<result column="height" jdbcType="DOUBLE" property="height"/>
+		<result column="format" jdbcType="VARCHAR" property="format"/>
+		<result column="url" jdbcType="VARCHAR" property="url"/>
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+	</resultMap>
+	<sql id="CarouselImage_Base_Column_List">
+    	id, carousel_id, name, width, height, format, url, create_time, update_time
+	</sql>
+	<select id="selectCarouselImageByPrimaryKey" parameterType="java.lang.Long" resultMap="CarouselImageBaseResultMap">
+		select
+		<include refid="CarouselImage_Base_Column_List"/>
+		from carousel_image
+		where carousel_id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	    delete from carousel
+	    where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="biz.llmall.common.entity.carousel.Carousel">
+	    insert into carousel (id, start_time, end_time,
+	      round_at_last, auto, `order`, create_time,
+	      update_time)
+	    values (#{id,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+	      #{roundAtLast,jdbcType=BIT}, #{auto,jdbcType=BIT},#{order,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
+	      #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.carousel.Carousel">
+    	update carousel
+	    set start_time = #{startTime,jdbcType=TIMESTAMP},
+	      end_time = #{endTime,jdbcType=TIMESTAMP},
+	      round_at_last = #{roundAtLast,jdbcType=BIT},
+	      auto = #{auto,jdbcType=BIT},
+	      `order` = #{order,jdbcType=BIT},
+	      create_time = #{createTime,jdbcType=TIMESTAMP},
+	      update_time = #{updateTime,jdbcType=TIMESTAMP}
+	    where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="findCarousels" resultMap="CarouselBaseResultMap">
+		select * from carousel t1
+		where 1=1
+		and #{currentDatetime, jdbcType=TIMESTAMP} between t1.start_time and t1.end_time;
+	</select>
+</mapper>

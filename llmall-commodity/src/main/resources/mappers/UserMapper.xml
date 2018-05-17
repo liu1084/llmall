@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="biz.llmall.commodity.model.mapper.UserMapper">
-	<resultMap id="BaseResultMap" type="biz.llmall.common.entity.user.User">
+	<resultMap id="UserBaseResultMap" type="biz.llmall.common.entity.user.User">
 		<id column="id" jdbcType="BIGINT" property="id"/>
 		<result column="group_id" jdbcType="BIGINT" property="groupId"/>
 		<result column="nickname" jdbcType="VARCHAR" property="nickname"/>
@@ -19,9 +19,9 @@
 	<sql id="Group_Base_Column_List">
 
 	</sql>
-	<select id="selectUserByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	<select id="selectUserByPrimaryKey" parameterType="java.lang.Long" resultMap="UserBaseResultMap">
 		select
-		<include refid="Base_Column_List"/>
+		<include refid="User_Base_Column_List"/>
 		from user
 		where id = #{id,jdbcType=BIGINT}
 	</select>

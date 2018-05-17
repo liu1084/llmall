@@ -8,9 +8,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface BrandMapper {
-    int deleteByPrimaryKey(Long id);
-    int insert(Brand record);
-    Brand selectByPrimaryKey(Long id);
-    int updateByPrimaryKey(Brand record);
+    int deleteBrandByPrimaryKey(Long id);
+    int insertBrand(Brand record);
+    Brand selectBrandByPrimaryKey(Long id);
+    int updateBrandByPrimaryKey(Brand record);
     List<Brand> findBrands();
 }

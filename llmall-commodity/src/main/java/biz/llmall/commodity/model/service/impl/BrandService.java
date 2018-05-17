@@ -19,6 +19,6 @@ public class BrandService implements IBrandService {
 
     @Override
     public Brand findBrandById(Long id) {
-        return brandMapper.selectByPrimaryKey(id);
+        return brandMapper.selectBrandByPrimaryKey(id);
     }
 }

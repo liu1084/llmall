@@ -12,5 +12,5 @@ public class Category implements Serializable {
     private Long parentId;
     private Date createTime;
     private Date updateTime;
-    private List<Commodity> commodities;
+    private List<Category> categories;
 }
