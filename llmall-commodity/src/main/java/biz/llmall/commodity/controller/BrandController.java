@@ -1,5 +1,7 @@
 package biz.llmall.commodity.controller;
 import biz.llmall.commodity.model.service.IBrandService;
+import biz.llmall.common.dto.response.APIResponse;
+import biz.llmall.common.dto.response.EnumStatus;
 import biz.llmall.common.entity.commodity.Brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +18,13 @@ public class BrandController {
     private IBrandService brandService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Brand> getBrands() {
-        return brandService.findBrands();
+    public APIResponse<List<Brand>> getBrands() {
+        try {
+            List<Brand> brands = brandService.findBrands();
+            return APIResponse.success(brands);
+        } catch (Exception ex) {
+            return APIResponse.error(EnumStatus.SERVICE_ERROR, ex.getMessage());
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

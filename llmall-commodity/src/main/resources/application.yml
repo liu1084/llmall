@@ -19,6 +19,7 @@ spring:
       charset: UTF-8
   messages:
     encoding: UTF-8
+    basename: classpath:i18n/
   application:
     name: llmall-service
 
@@ -60,15 +61,4 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: ge*u0Oj9X
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://dev1-eureka.g2link-inc.cn/eureka
-## WMP
-wmp:
-  config:
-    token: 00009f03b6484120bd90648539ca3d37
-
-
 ---

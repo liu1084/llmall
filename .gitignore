@@ -42,4 +42,5 @@ mvnw.cmd
 vendor
 node_modules
 swagger
-llmall/llmall.2018-05-17.log.zip
+llmall/*.log*
+llmall/llmall.log
