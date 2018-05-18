@@ -28,7 +28,12 @@ public class BrandController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Brand getBrandById(@PathVariable("id") Long id) {
-        return brandService.findBrandById(id);
+    public APIResponse<Brand> getBrandById(@PathVariable("id") Long id) {
+        try {
+            Brand brands = brandService.findBrandById(id);
+            return APIResponse.success(brands);
+        } catch (Exception ex) {
+            return APIResponse.error(EnumStatus.SERVICE_ERROR, ex.getMessage());
+        }
     }
 }

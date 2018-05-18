@@ -1,5 +1,7 @@
 package biz.llmall.commodity.controller;
 import biz.llmall.commodity.model.service.ICategoryService;
+import biz.llmall.common.dto.response.APIResponse;
+import biz.llmall.common.dto.response.EnumStatus;
 import biz.llmall.common.entity.commodity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +18,22 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Category> getCategories() {
-        return categoryService.getCategories();
+    public APIResponse<List<Category>> getCategories() {
+        try {
+            List<Category> categories = categoryService.getCategories();
+            return APIResponse.success(categories);
+        } catch (Exception ex) {
+            return APIResponse.error(EnumStatus.SERVICE_ERROR, ex.getMessage());
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Category getCategoryById(@PathVariable("id") Long id) {
-        return categoryService.findCategoryById(id);
+    public APIResponse<Category> getCategoryById(@PathVariable("id") Long id) {
+        try {
+            Category category = categoryService.findCategoryById(id);
+            return APIResponse.success(category);
+        } catch (Exception ex) {
+            return APIResponse.error(EnumStatus.SERVICE_ERROR, ex.getMessage());
+        }
     }
 }
