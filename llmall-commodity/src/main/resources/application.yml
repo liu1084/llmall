@@ -29,7 +29,7 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 logging:
-  path: llmall
+  path: /var/log/llmall
   config: classpath:logback-spring.xml
   
 #swagger config

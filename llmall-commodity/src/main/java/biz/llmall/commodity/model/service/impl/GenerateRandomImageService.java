@@ -21,7 +21,7 @@ public class GenerateRandomImageService implements IGenerateRandomImageService {
     private CarouselImageMapper carouselImageMapper;
     @Autowired
     private CommodityImageMapper commodityImageMapper;
-    private String imageBasePath = "/Users/jim/Work/github/llmall/llmall-commodity/src/main/resources/static";
+    private String imageBasePath = "/data/static";
 
     @Override
     public List<CommodityImage> getCommodityImages() {
