@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class GenerateRandomImageService implements IGenerateRandomImageService {
     private CarouselImageMapper carouselImageMapper;
     @Autowired
     private CommodityImageMapper commodityImageMapper;
-    private String imageBasePath = "/data/static";
+    private String imageBasePath = "/data/static/img";
 
     @Override
     public List<CommodityImage> getCommodityImages() {
@@ -76,8 +77,10 @@ public class GenerateRandomImageService implements IGenerateRandomImageService {
                     os.write(b, 0, length);
                 }
                 Thread.sleep(2000);
-            } catch (IOException | InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
+
+            } catch (FileNotFoundException e) {
                 URL url = null;
                 try {
                     url = new URL(BASE_URL
@@ -94,6 +97,10 @@ public class GenerateRandomImageService implements IGenerateRandomImageService {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             } finally {
                 if (is != null) {
                     try {

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <contextName>llmall</contextName>
+    <contextName>llmall-context</contextName>
 
     <springProperty scope="context" name="log.level" source="logging.level.root" defaultValue="DEBUG"/>
-    <springProperty scope="context" name="log.path" source="logging.path" defaultValue="target"/>
-    <springProperty scope="context" name="log.file" source="logging.file" defaultValue="/var/log/llmall"/>
+    <springProperty scope="context" name="log.path" source="logging.path" defaultValue="/var/log/llmall"/>
+    <springProperty scope="context" name="log.file" source="logging.file" defaultValue="llmall"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
