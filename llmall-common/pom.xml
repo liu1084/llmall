@@ -54,5 +54,15 @@
 		    <artifactId>inamik-text-tables</artifactId>
 		    <version>1.0-SNAPSHOT</version>
 	    </dependency>
+
+	    <!--okhttp-->
+	    <dependency>
+		    <groupId>com.squareup.okhttp3</groupId>
+		    <artifactId>okhttp</artifactId>
+	    </dependency>
+	    <dependency>
+		    <groupId>com.squareup.okhttp3</groupId>
+		    <artifactId>okhttp-urlconnection</artifactId>
+	    </dependency>
     </dependencies>
 </project>

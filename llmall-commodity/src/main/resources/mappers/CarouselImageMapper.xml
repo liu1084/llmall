@@ -47,4 +47,10 @@
 		  update_time = #{updateTime,jdbcType=TIMESTAMP}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
+	<select id="findCarouseImages" resultMap="CarouselImageBaseResultMap">
+		select
+		<include refid="CarouselImage_Base_Column_List" />
+		from carousel_image t1
+		where 1=1
+	</select>
 </mapper>

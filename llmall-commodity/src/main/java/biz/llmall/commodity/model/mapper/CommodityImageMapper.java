@@ -8,9 +8,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CommodityImageMapper {
-    int deleteByPrimaryKey(Long id);
-    int insert(CommodityImage record);
-    CommodityImage selectByPrimaryKey(Long id);
-    int updateByPrimaryKey(CommodityImage record);
+    int deleteCommodityImageByPrimaryKey(Long id);
+    int insertCommodityImage(CommodityImage record);
+    CommodityImage selectCommodityImageByPrimaryKey(Long id);
+    int updateCommodityImageByPrimaryKey(CommodityImage record);
     List<CommodityImage> findCommodityImages();
 }
