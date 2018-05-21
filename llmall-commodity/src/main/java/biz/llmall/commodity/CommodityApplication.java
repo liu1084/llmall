@@ -1,5 +1,4 @@
 package biz.llmall.commodity;
-
 import com.spring4all.swagger.EnableSwagger2Doc;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

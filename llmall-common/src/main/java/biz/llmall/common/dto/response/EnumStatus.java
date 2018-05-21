@@ -7,7 +7,9 @@ public enum EnumStatus implements IStatus {
     UNAUTHORIZED(401, "用户认证失败"),
     FORBIDDEN(403, "权限不足"),
     SERVICE_ERROR(500, "服务器错误"),
-    CAPTCHA_INVALID(405, "验证码校验失败");
+    CAPTCHA_INVALID(405, "验证码校验失败"),
+    INVALID_PARAMETER(406, "无效的参数"),
+    ;
     private Integer code;
     private String message;
 

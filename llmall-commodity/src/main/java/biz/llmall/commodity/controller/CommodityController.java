@@ -4,7 +4,6 @@ import biz.llmall.common.dto.response.APIResponse;
 import biz.llmall.common.dto.response.EnumStatus;
 import biz.llmall.common.entity.commodity.Commodity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,14 +41,5 @@ public class CommodityController {
         } catch (Exception ex) {
             return APIResponse.error(EnumStatus.SERVICE_ERROR, ex.getMessage());
         }
-    }
-
-    private Errors validCommodityId(String id, Errors errors) {
-        Pattern pattern = Pattern.compile("\\d+");
-        Matcher matcher = pattern.matcher(id);
-        if (!matcher.matches()) {
-            errors.reject(EnumStatus.INVALID_PARAMETER.getMessage());
-        }
-        return errors;
     }
 }
