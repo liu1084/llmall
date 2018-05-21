@@ -16,4 +16,9 @@ public class CommodityService implements ICommodityService {
     public List<Commodity> findCommoditiesTopX(int max) {
         return commodityMapper.findCommoditiesTopX(max);
     }
+
+    @Override
+    public Commodity findCommodityByPrimaryId(Long id) {
+        return commodityMapper.selectCommodityByPrimaryKey(id);
+    }
 }

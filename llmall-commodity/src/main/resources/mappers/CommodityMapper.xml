@@ -40,7 +40,7 @@
 		from commodity_image
 		where commodity_id = #{id,jdbcType=BIGINT}
 	</select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    <select id="selectCommodityByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Commodity_Base_Column_List"/>
         ,
@@ -48,11 +48,11 @@
         from commodity
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <delete id="deleteCommodityByPrimaryKey" parameterType="java.lang.Long">
         delete from commodity
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="biz.llmall.common.entity.commodity.Commodity">
+    <insert id="insertCommodity" parameterType="biz.llmall.common.entity.commodity.Commodity">
         insert into commodity (id, brand_id, name,
         price, category_id,
         create_time, update_time, description
@@ -62,7 +62,7 @@
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR}
         )
     </insert>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="biz.llmall.common.entity.commodity.Commodity">
+    <update id="updateCommodityByPrimaryKeyWithBLOBs" parameterType="biz.llmall.common.entity.commodity.Commodity">
         update commodity
         set brand_id = #{brandId,jdbcType=BIGINT},
         name = #{name,jdbcType=VARCHAR},
@@ -73,7 +73,7 @@
         description = #{description,jdbcType=LONGVARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.Commodity">
+    <update id="updateCommodityByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.Commodity">
         update commodity
         set brand_id = #{brandId,jdbcType=BIGINT},
         name = #{name,jdbcType=VARCHAR},

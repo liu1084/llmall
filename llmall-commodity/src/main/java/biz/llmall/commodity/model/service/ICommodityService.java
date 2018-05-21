@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface ICommodityService {
     List<Commodity> findCommoditiesTopX(int max);
+    Commodity findCommodityByPrimaryId(Long id);
 }

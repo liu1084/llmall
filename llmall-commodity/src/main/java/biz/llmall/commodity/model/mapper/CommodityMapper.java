@@ -8,11 +8,11 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CommodityMapper {
-    int deleteByPrimaryKey(Long id);
-    int insert(Commodity record);
-    Commodity selectByPrimaryKey(Long id);
-    int updateByPrimaryKeyWithBLOBs(Commodity record);
-    int updateByPrimaryKey(Commodity record);
+    int deleteCommodityByPrimaryKey(Long id);
+    int insertCommodity(Commodity record);
+    Commodity selectCommodityByPrimaryKey(Long id);
+    int updateCommodityByPrimaryKeyWithBLOBs(Commodity record);
+    int updateCommodityByPrimaryKey(Commodity record);
     List<Commodity> getCommoditiesByBrandId(Long brandId);
     List<Commodity> findCommodities();
     List<Commodity> findCommoditiesTopX(@Param("max") int max);
