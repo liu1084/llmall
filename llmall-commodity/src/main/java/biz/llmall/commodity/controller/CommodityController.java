@@ -6,6 +6,7 @@ import biz.llmall.common.entity.commodity.Commodity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RestController
-@RequestMapping(value = "/api/commodity")
+@RequestMapping(value = "/api/commodity", method = RequestMethod.GET)
 public class CommodityController {
     @Autowired
     private ICommodityService commodityService;
