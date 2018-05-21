@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="biz.llmall.commodity.model.mapper.CommodityMapper">
-    <resultMap id="BaseResultMap" type="biz.llmall.common.entity.commodity.Commodity">
+    <resultMap id="CommodityBaseResultMap" type="biz.llmall.common.entity.commodity.Commodity">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="brand_id" jdbcType="BIGINT" property="brandId"/>
         <result column="name" jdbcType="VARCHAR" property="CommodityName"/>
@@ -13,17 +13,16 @@
 		        property="commodityImages"
 		        column="id"
 		        ofType="biz.llmall.common.entity.commodity.CommodityImage"
-                select="CommodityImageBaseResultMap">
-            <id column="commodity_id" property="commodityId"/>
+                select="selectCommodityImageByPrimaryKey">
         </collection>
     </resultMap>
-    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="biz.llmall.common.entity.commodity.Commodity">
+    <resultMap extends="CommodityBaseResultMap" id="ResultMapWithBLOBs" type="biz.llmall.common.entity.commodity.Commodity">
         <result column="description" jdbcType="LONGVARCHAR" property="description"/>
     </resultMap>
-    <sql id="Base_Column_List">
+    <sql id="Commodity_Base_Column_List">
         id, brand_id, name, price, category_id, create_time, update_time
     </sql>
-    <sql id="Blob_Column_List">
+    <sql id="Commodity_Blob_Column_List">
         description
     </sql>
 
@@ -43,9 +42,9 @@
 	</select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Commodity_Base_Column_List"/>
         ,
-        <include refid="Blob_Column_List"/>
+        <include refid="Commodity_Blob_Column_List"/>
         from commodity
         where id = #{id,jdbcType=BIGINT}
     </select>
@@ -84,12 +83,22 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="getCommoditiesByBrandId" resultMap="BaseResultMap" parameterType="long">
+    <select id="getCommoditiesByBrandId" resultMap="CommodityBaseResultMap" parameterType="long">
         SELECT * FROM commodity t1
         WHERE t1.brand_id = #{brandId, jdbcType=BIGINT}
     </select>
-    <select id="findCommodities" resultMap="BaseResultMap">
+    <select id="findCommodities" resultMap="CommodityBaseResultMap">
         select * from commodity t1
         where 1=1
     </select>
+	<select id="findCommoditiesTopX" resultMap="CommodityBaseResultMap">
+		select
+		<include refid="Commodity_Base_Column_List"/>
+		,
+		<include refid="Commodity_Blob_Column_List"/>
+		from commodity t1
+		where 1=1
+		order by t1.`order` asc, t1.update_time desc
+		limit #{max}
+	</select>
 </mapper>

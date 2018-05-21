@@ -28,6 +28,8 @@ mybatis:
   type-aliases-package: biz.llmall.common.entity
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    cache-enabled: true
+
 logging:
   path: /var/log/llmall
   config: classpath:logback-spring.xml
