@@ -4,8 +4,8 @@
     <resultMap id="brandBaseResultMap" type="biz.llmall.common.entity.commodity.Brand">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="cover_url" jdbcType="VARCHAR" property="coverUrl"/>
         <result column="logo_lg" jdbcType="VARCHAR" property="logoLg"/>
-        <result column="logo_md" jdbcType="VARCHAR" property="logoMd"/>
         <result column="logo_sm" jdbcType="VARCHAR" property="logoSm"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -18,8 +18,8 @@
 	<resultMap id="brandsResultMap" type="biz.llmall.common.entity.commodity.Brand">
 		<id column="id" jdbcType="BIGINT" property="id"/>
 		<result column="name" jdbcType="VARCHAR" property="brandName"/>
+		<result column="cover_url" jdbcType="VARCHAR" property="coverUrl"/>
 		<result column="logo_lg" jdbcType="VARCHAR" property="logoLg"/>
-		<result column="logo_md" jdbcType="VARCHAR" property="logoMd"/>
 		<result column="logo_sm" jdbcType="VARCHAR" property="logoSm"/>
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
 		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -39,7 +39,7 @@
 	</resultMap>
 	<!--brand-->
     <sql id="Brand_Base_Column_List">
-        id, name,  logo_lg, logo_md, logo_sm, create_time, update_time
+        id, name, cover_url, logo_lg, logo_sm, create_time, update_time
     </sql>
 	<select id="selectBrandByPrimaryKey" parameterType="java.lang.Long" resultMap="brandBaseResultMap">
 		select
@@ -54,18 +54,18 @@
         where id = #{id,jdbcType=BIGINT}
     </delete>
 	<insert id="insertBrand" parameterType="biz.llmall.common.entity.commodity.Brand">
-        insert into brand (id, name,
-        logo_lg, logo_md, logo_sm,
+        insert into brand (id, name, cover_url
+        logo_lg, logo_sm,
         create_time, update_time)
-        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR},
-        #{logoLg,jdbcType=VARCHAR}, #{logoMd,jdbcType=VARCHAR}, #{logoSm,jdbcType=VARCHAR},
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{coverUrl, jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR},
+        #{logoLg,jdbcType=VARCHAR}, #{logoSm,jdbcType=VARCHAR},
         #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
 	<update id="updateBrandByPrimaryKey" parameterType="biz.llmall.common.entity.commodity.Brand">
         update brand
         set name = #{name,jdbcType=VARCHAR},
+        cover_url = #{coverUrl, jdbcType=VARCHAR},
         logo_lg = #{logoLg,jdbcType=VARCHAR},
-        logo_md = #{logoMd,jdbcType=VARCHAR},
         logo_sm = #{logoSm,jdbcType=VARCHAR},
         create_time = #{createTime,jdbcType=TIMESTAMP},
         update_time = #{updateTime,jdbcType=TIMESTAMP}
