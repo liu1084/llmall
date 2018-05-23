@@ -9,8 +9,8 @@ import java.util.List;
 public class Brand implements Serializable {
     private Long id;
     private String brandName;
+    private String coverUrl;
     private String logoLg;
-    private String logoMd;
     private String logoSm;
     private String description;
     private Date createTime;

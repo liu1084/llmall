@@ -277,16 +277,7 @@
                 <artifactId>bootstrap</artifactId>
                 <version>3.3.7</version>
             </dependency>
-            <dependency>
-                <groupId>cn.g2link.bms.common</groupId>
-                <artifactId>bms-common</artifactId>
-                <version>2.6.9</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.g2link.bms.service</groupId>
-                <artifactId>bms-service</artifactId>
-                <version>1.7.9</version>
-            </dependency>
+
 			<!--text table-->
 	        <dependency>
 		        <groupId>com.github.inamik.text.tables</groupId>
