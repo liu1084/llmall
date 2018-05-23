@@ -11,9 +11,13 @@ spring:
     auto: true
   devtools:
     livereload:
-      enabled: true
+      enabled: false
     restart:
       exclude: static/**
+      enabled: false
+    remote:
+      restart:
+        enabled: false
   http:
     encoding:
       charset: UTF-8
@@ -31,7 +35,6 @@ mybatis:
     cache-enabled: true
 
 logging:
-  path: /var/log/llmall
   config: classpath:logback-spring.xml
   
 #swagger config
@@ -63,4 +66,6 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: ge*u0Oj9X
+    database: 0
+
 ---

@@ -19,7 +19,7 @@
 	<sql id="Carousel_Base_Column_List">
 	    id, start_time, end_time, round_at_last, auto, `order`, create_time, update_time
 	</sql>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="CarouselBaseResultMap">
+	<select id="selectCarouselByPrimaryKey" parameterType="java.lang.Long" resultMap="CarouselBaseResultMap">
 		select
 		<include refid="Carousel_Base_Column_List"/>
 		from carousel
@@ -46,7 +46,7 @@
 		from carousel_image
 		where carousel_id = #{id,jdbcType=BIGINT}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	<delete id="deleteCarouselByPrimaryKey" parameterType="java.lang.Long">
 	    delete from carousel
 	    where id = #{id,jdbcType=BIGINT}
 	</delete>
@@ -58,7 +58,7 @@
 	      #{roundAtLast,jdbcType=BIT}, #{auto,jdbcType=BIT},#{order,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
 	      #{updateTime,jdbcType=TIMESTAMP})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="biz.llmall.common.entity.carousel.Carousel">
+	<update id="updateCarouselByPrimaryKey" parameterType="biz.llmall.common.entity.carousel.Carousel">
     	update carousel
 	    set start_time = #{startTime,jdbcType=TIMESTAMP},
 	      end_time = #{endTime,jdbcType=TIMESTAMP},

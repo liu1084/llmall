@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ICarouselService {
     List<Carousel> findCarousels(Date currentDatetime);
+    Carousel findCarouselById(Long id);
 }
