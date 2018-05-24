@@ -1,8 +1,10 @@
 package biz.llmall.commodity.model.mapper;
 import biz.llmall.common.entity.commodity.Category;
+import biz.llmall.common.entity.commodity.CategoryLevel;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -12,5 +14,5 @@ public interface CategoryMapper {
     int insertCategory(Category record);
     Category selectCategoryByPrimaryKey(Long id);
     int updateCategoryByPrimaryKey(Category record);
-    List<Category> findCategories();
+    List<CategoryLevel> findCategories();
 }

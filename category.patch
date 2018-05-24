@@ -1,0 +1,217 @@
+diff --git a/llmall-commodity/src/main/java/biz/llmall/commodity/controller/CategoryController.java b/llmall-commodity/src/main/java/biz/llmall/commodity/controller/CategoryController.java
+index bd5a3ef..8560051 100644
+--- a/llmall-commodity/src/main/java/biz/llmall/commodity/controller/CategoryController.java
++++ b/llmall-commodity/src/main/java/biz/llmall/commodity/controller/CategoryController.java
+@@ -3,13 +3,16 @@ import biz.llmall.commodity.model.service.ICategoryService;
+ import biz.llmall.common.dto.response.APIResponse;
+ import biz.llmall.common.dto.response.EnumStatus;
+ import biz.llmall.common.entity.commodity.Category;
++import biz.llmall.common.entity.commodity.CategoryLevel;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.web.bind.annotation.PathVariable;
+ import org.springframework.web.bind.annotation.RequestMapping;
+ import org.springframework.web.bind.annotation.RequestMethod;
+ import org.springframework.web.bind.annotation.RestController;
+ 
++import java.util.HashMap;
+ import java.util.List;
++import java.util.Map;
+ 
+ @RestController
+ @RequestMapping(value = "/api/category")
+@@ -18,11 +21,13 @@ public class CategoryController {
+     private ICategoryService categoryService;
+ 
+     @RequestMapping(value = "", method = RequestMethod.GET)
+-    public APIResponse<List<Category>> getCategories() {
++    public APIResponse<Map<String, List<CategoryLevel>>> getCategories() {
+         try {
+-            List<Category> categories = categoryService.getCategories();
++           Map<String, List<CategoryLevel>> categories = categoryService.getCategories();
++
+             return APIResponse.success(categories);
+         } catch (Exception ex) {
++            ex.printStackTrace();
+             return APIResponse.error(EnumStatus.SERVICE_ERROR, ex.getMessage());
+         }
+     }
+diff --git a/llmall-commodity/src/main/java/biz/llmall/commodity/model/mapper/CategoryMapper.java b/llmall-commodity/src/main/java/biz/llmall/commodity/model/mapper/CategoryMapper.java
+index 4aaeeea..0fefd32 100644
+--- a/llmall-commodity/src/main/java/biz/llmall/commodity/model/mapper/CategoryMapper.java
++++ b/llmall-commodity/src/main/java/biz/llmall/commodity/model/mapper/CategoryMapper.java
+@@ -1,8 +1,10 @@
+ package biz.llmall.commodity.model.mapper;
+ import biz.llmall.common.entity.commodity.Category;
++import biz.llmall.common.entity.commodity.CategoryLevel;
+ import org.apache.ibatis.annotations.Mapper;
+ import org.springframework.stereotype.Repository;
+ 
++import java.util.HashMap;
+ import java.util.List;
+ 
+ @Mapper
+@@ -12,5 +14,5 @@ public interface CategoryMapper {
+     int insertCategory(Category record);
+     Category selectCategoryByPrimaryKey(Long id);
+     int updateCategoryByPrimaryKey(Category record);
+-    List<Category> findCategories();
++    List<CategoryLevel> findCategories();
+ }
+\ No newline at end of file
+diff --git a/llmall-commodity/src/main/java/biz/llmall/commodity/model/service/ICategoryService.java b/llmall-commodity/src/main/java/biz/llmall/commodity/model/service/ICategoryService.java
+index 155dade..0170f32 100644
+--- a/llmall-commodity/src/main/java/biz/llmall/commodity/model/service/ICategoryService.java
++++ b/llmall-commodity/src/main/java/biz/llmall/commodity/model/service/ICategoryService.java
+@@ -1,9 +1,12 @@
+ package biz.llmall.commodity.model.service;
+ import biz.llmall.common.entity.commodity.Category;
++import biz.llmall.common.entity.commodity.CategoryLevel;
+ 
++import java.util.HashMap;
+ import java.util.List;
++import java.util.Map;
+ 
+ public interface ICategoryService {
+-    List<Category> getCategories();
++    Map<String, List<CategoryLevel>> getCategories();
+     Category findCategoryById(Long id);
+ }
+diff --git a/llmall-commodity/src/main/java/biz/llmall/commodity/model/service/impl/CategoryService.java b/llmall-commodity/src/main/java/biz/llmall/commodity/model/service/impl/CategoryService.java
+index f514015..b33d762 100644
+--- a/llmall-commodity/src/main/java/biz/llmall/commodity/model/service/impl/CategoryService.java
++++ b/llmall-commodity/src/main/java/biz/llmall/commodity/model/service/impl/CategoryService.java
+@@ -2,20 +2,31 @@ package biz.llmall.commodity.model.service.impl;
+ import biz.llmall.commodity.model.mapper.CategoryMapper;
+ import biz.llmall.commodity.model.service.ICategoryService;
+ import biz.llmall.common.entity.commodity.Category;
++import biz.llmall.common.entity.commodity.CategoryLevel;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.cache.annotation.Cacheable;
+ import org.springframework.stereotype.Service;
+ 
+ import java.util.List;
++import java.util.Map;
++import java.util.concurrent.ConcurrentHashMap;
++import java.util.stream.Collectors;
+ 
+ @Service
+ public class CategoryService implements ICategoryService {
+-    @Autowired private CategoryMapper categoryMapper;
++    @Autowired
++    private CategoryMapper categoryMapper;
+ 
+     @Override
+     @Cacheable("getCategories")
+-    public List<Category> getCategories() {
+-        return categoryMapper.findCategories();
++    public Map<String, List<CategoryLevel>> getCategories() {
++        List<CategoryLevel> categories = categoryMapper.findCategories();
++        Map<String, List<CategoryLevel>> map = new ConcurrentHashMap<>();
++        categories.stream().forEach(categoryLevel -> {
++            List<CategoryLevel> cl = categories.stream().filter(category -> category.getParentId1().equals(categoryLevel.getId0())).collect(Collectors.toList());
++            map.put(categoryLevel.getName0(), cl);
++        });
++        return map;
+     }
+ 
+     @Override
+diff --git a/llmall-commodity/src/main/resources/mappers/CategoryMapper.xml b/llmall-commodity/src/main/resources/mappers/CategoryMapper.xml
+index 38d8c75..ea32537 100644
+--- a/llmall-commodity/src/main/resources/mappers/CategoryMapper.xml
++++ b/llmall-commodity/src/main/resources/mappers/CategoryMapper.xml
+@@ -7,34 +7,18 @@
+         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+-	    <collection property="categories"
+-	                column="id"
+-	                ofType="biz.llmall.common.entity.commodity.Category"
+-	                select="selectCategoryByParentId"/>
+     </resultMap>
+-	<resultMap id="CategoryMainMap" type="biz.llmall.common.entity.commodity.Category">
+-		<id column="id" jdbcType="BIGINT" property="id"/>
+-		<result column="name" jdbcType="VARCHAR" property="name"/>
+-		<result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+-		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+-		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+-	</resultMap>
++
+ 	<!--categories-->
+-    <sql id="Base_Column_List">
+-        id, name, parent_id, create_time, update_time
++    <sql id="Category_Base_Column_List">
++        id, name, parent_id
+     </sql>
+ 	<select id="selectCategoryByPrimaryKey" parameterType="java.lang.Long" resultMap="CategoryBaseResultMap">
+ 		select
+-		<include refid="Base_Column_List"/>
++		<include refid="Category_Base_Column_List"/>
+ 		from category
+ 		where id = #{id,jdbcType=BIGINT}
+ 	</select>
+-	<select id="selectCategoryByParentId" parameterType="java.lang.Long" resultMap="CategoryBaseResultMap">
+-		select
+-		<include refid="Base_Column_List"/>
+-		from category
+-		where parent_id = #{id,jdbcType=BIGINT}
+-	</select>
+ 	<delete id="deleteCategoryByPrimaryKey" parameterType="java.lang.Long">
+         delete from category
+         where id = #{id,jdbcType=BIGINT}
+@@ -53,9 +37,12 @@
+         update_time = #{updateTime,jdbcType=TIMESTAMP}
+         where id = #{id,jdbcType=BIGINT}
+     </update>
+-	<select id="findCategories" resultMap="CategoryMainMap">
+-        select * from category t1
+-        where 1=1
+-        and t1.parent_id = 0
++	<select id="findCategories" resultType="biz.llmall.common.entity.commodity.CategoryLevel">
++        select
++	        t1.id as id0, t1.name as name0,
++	        t2.id as id1, t2.name as name1, t2.parent_id as parentId1
++        from category t1
++		left JOIN category t2 on t1.id = t2.parent_id
++		where t1.parent_id = 0
+     </select>
+ </mapper>
+\ No newline at end of file
+diff --git a/llmall-common/src/main/java/biz/llmall/common/dto/commodity/CategoryDTO.java b/llmall-common/src/main/java/biz/llmall/common/dto/commodity/CategoryDTO.java
+index 2b8e278..096c040 100644
+--- a/llmall-common/src/main/java/biz/llmall/common/dto/commodity/CategoryDTO.java
++++ b/llmall-common/src/main/java/biz/llmall/common/dto/commodity/CategoryDTO.java
+@@ -2,6 +2,14 @@ package biz.llmall.common.dto.commodity;
+ import biz.llmall.common.entity.commodity.Category;
+ import lombok.Data;
+ 
++/**
++ * t1.id as id0, t1.name as name0, t2.id as id1, t2.name as name1, t2.parent_id as parentId1
++ */
+ @Data
+-public class CategoryDTO extends Category {
++public class CategoryDTO  {
++    private String id0;
++    private String name0;
++    private String id1;
++    private String name1;
++    private String parentId1;
+ }
+diff --git a/llmall-common/src/main/java/biz/llmall/common/entity/commodity/CategoryLevel.java b/llmall-common/src/main/java/biz/llmall/common/entity/commodity/CategoryLevel.java
+new file mode 100644
+index 0000000..26d5192
+--- /dev/null
++++ b/llmall-common/src/main/java/biz/llmall/common/entity/commodity/CategoryLevel.java
+@@ -0,0 +1,13 @@
++package biz.llmall.common.entity.commodity;
++import lombok.Data;
++
++import java.io.Serializable;
++
++@Data
++public class CategoryLevel implements Serializable {
++    private Long id0;
++    private String name0;
++    private Long id1;
++    private String name1;
++    private Long parentId1;
++}

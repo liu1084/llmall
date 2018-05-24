@@ -7,33 +7,17 @@
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-	    <collection property="categories"
-	                column="id"
-	                ofType="biz.llmall.common.entity.commodity.Category"
-	                select="selectCategoryByParentId"/>
     </resultMap>
-	<resultMap id="CategoryMainMap" type="biz.llmall.common.entity.commodity.Category">
-		<id column="id" jdbcType="BIGINT" property="id"/>
-		<result column="name" jdbcType="VARCHAR" property="name"/>
-		<result column="parent_id" jdbcType="BIGINT" property="parentId"/>
-		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-	</resultMap>
+
 	<!--categories-->
-    <sql id="Base_Column_List">
-        id, name, parent_id, create_time, update_time
+    <sql id="Category_Base_Column_List">
+        id, name, parent_id
     </sql>
 	<select id="selectCategoryByPrimaryKey" parameterType="java.lang.Long" resultMap="CategoryBaseResultMap">
 		select
-		<include refid="Base_Column_List"/>
+		<include refid="Category_Base_Column_List"/>
 		from category
 		where id = #{id,jdbcType=BIGINT}
-	</select>
-	<select id="selectCategoryByParentId" parameterType="java.lang.Long" resultMap="CategoryBaseResultMap">
-		select
-		<include refid="Base_Column_List"/>
-		from category
-		where parent_id = #{id,jdbcType=BIGINT}
 	</select>
 	<delete id="deleteCategoryByPrimaryKey" parameterType="java.lang.Long">
         delete from category
@@ -53,9 +37,12 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
     </update>
-	<select id="findCategories" resultMap="CategoryMainMap">
-        select * from category t1
-        where 1=1
-        and t1.parent_id = 0
+	<select id="findCategories" resultType="biz.llmall.common.entity.commodity.CategoryLevel">
+        select
+	        t1.id as id0, t1.name as name0,
+	        t2.id as id1, t2.name as name1, t2.parent_id as parentId1
+        from category t1
+		left JOIN category t2 on t1.id = t2.parent_id
+		where t1.parent_id = 0
     </select>
 </mapper>
